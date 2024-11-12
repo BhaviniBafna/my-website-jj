@@ -1,88 +1,256 @@
+/* Reset */
 * {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+    font-family: Arial, sans-serif;
 }
 
+/* General Layout */
 body {
-    font-family: 'Arial', sans-serif;
+    background-color: #000;
+    color: #f5f5f5;
     line-height: 1.6;
-    background-color: #f4f4f9;
-    color: #333;
-    padding: 20px;
-    max-width: 1200px;
-    margin: auto;
 }
 
+/* Header Section */
 header {
-    text-align: center;
-    padding: 50px 0;
-    background-color: #002366;
-    color: white;
-}
-
-header h1 {
-    font-size: 3em;
-    margin-bottom: 10px;
-}
-
-header p {
-    font-size: 1.2em;
-}
-
-section#courses {
-    margin-top: 50px;
-}
-
-h2 {
-    text-align: center;
-    margin-bottom: 30px;
-    font-size: 2.5em;
-    color: #002366;
-}
-
-.course-list {
-    display: grid;
-    grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-    gap: 20px;
-}
-
-.course-item {
-    background-color: white;
+    background-color: #111;
     padding: 20px;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    text-align: center;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
 }
 
-.course-item h3 {
-    font-size: 1.5em;
-    margin-bottom: 10px;
-    color: #002366;
+header .logo h1 {
+    color: #f5f5f5;
+    font-size: 24px;
 }
 
-.course-item p {
-    font-size: 1em;
-    color: #666;
+header nav ul {
+    list-style-type: none;
 }
 
-footer {
-    text-align: center;
-    margin-top: 50px;
-    padding: 20px;
-    background-color: #002366;
-    color: white;
+header nav ul li {
+    display: inline;
+    margin-left: 20px;
 }
 
-footer a {
-    color: #FFD700;
+header nav ul li a {
+    color: #aaa;
     text-decoration: none;
+    font-weight: bold;
+    transition: color 0.3s ease;
 }
 
-footer a:hover {
-    text-decoration: underline;
+header nav ul li a:hover,
+header nav ul li a.btn {
+    color: #0dcaf0;
+}
+
+/* Hero Section */
+#hero {
+    background: url('hero-image.jpg') no-repeat center center/cover;
+    color: #f5f5f5;
+    padding: 80px 20px;
+    text-align: center;
+}
+
+#hero h2 {
+    font-size: 36px;
+    margin-bottom: 10px;
+}
+
+#hero p {
+    font-size: 18px;
+    margin-bottom: 20px;
+}
+
+/* Section Headings */
+.section h2 {
+    font-size: 30px;
+    color: #0dcaf0;
+    text-align: center;
+    margin: 40px 0 20px;
+}
+
+/* Courses Section */
+.card-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+}
+
+.card {
+    background-color: #222;
+    border-radius: 8px;
+    padding: 20px;
+    width: 250px;
+    text-align: center;
+    transition: transform 0.3s;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.card img {
+    border-radius: 5px;
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    margin-bottom: 15px;
+}
+
+.card h3 {
+    color: #0dcaf0;
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.card p {
+    color: #ccc;
+    font-size: 16px;
+}
+
+.card:hover {
+    transform: translateY(-5px);
+}
+
+/* Services Section */
+.service-container {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    gap: 20px;
+    padding: 20px;
+}
+
+.service {
+    background-color: #222;
+    border-radius: 8px;
+    padding: 20px;
+    width: 250px;
+    text-align: center;
+    transition: transform 0.3s;
+    box-shadow: 0px 4px 6px rgba(0, 0, 0, 0.3);
+}
+
+.service img {
+    border-radius: 5px;
+    width: 100%;
+    height: 150px;
+    object-fit: cover;
+    margin-bottom: 15px;
+}
+
+.service h3 {
+    color: #0dcaf0;
+    font-size: 20px;
+    margin-bottom: 10px;
+}
+
+.service p {
+    color: #ccc;
+    font-size: 16px;
+}
+
+.service:hover {
+    transform: translateY(-5px);
+}
+
+/* Blog Section */
+#blog p {
+    max-width: 800px;
+    margin: 0 auto 20px;
+    color: #ddd;
+    font-size: 18px;
+    text-align: center;
+}
+
+/* About Us Section */
+#about p {
+    max-width: 800px;
+    margin: 0 auto;
+    color: #ddd;
+    font-size: 18px;
+    line-height: 1.6;
+}
+
+/* Book Now Section */
+#book-now {
+    text-align: center;
+    padding: 40px 20px;
+}
+
+#book-now h2 {
+    color: #0dcaf0;
+    margin-bottom: 10px;
+}
+
+#book-now p {
+    font-size: 18px;
+    color: #ddd;
+    margin-bottom: 20px;
+}
+
+#book-now .btn {
+    padding: 10px 20px;
+    color: #fff;
+    background-color: #0dcaf0;
+    border: none;
+    border-radius: 5px;
+    font-size: 16px;
+    cursor: pointer;
+    transition: background-color 0.3s ease;
+}
+
+#book-now .btn:hover {
+    background-color: #0b95c0;
+}
+
+/* Customer Feedback Section */
+#feedback {
+    text-align: center;
+    padding: 40px 20px;
+}
+
+#feedback h2 {
+    color: #0dcaf0;
+    margin-bottom: 20px;
+}
+
+.video-feedback iframe {
+    margin: 10px;
+    width: 100%;
+    max-width: 560px;
+    height: 315px;
+    border-radius: 8px;
+}
+
+/* Footer Section */
+footer {
+    background-color: #111;
+    color: #777;
+    text-align: center;
+    padding: 20px;
+    font-size: 14px;
 }
 
 footer p {
-    margin: 5px 0;
+    color: #aaa;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    .card-container,
+    .service-container {
+        flex-direction: column;
+        align-items: center;
+    }
+
+    header nav ul li {
+        display: block;
+        text-align: center;
+        margin: 10px 0;
+    }
 }
