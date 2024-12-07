@@ -5,7 +5,7 @@
     box-sizing: border-box;
 }
 
-/* Body and general styles */
+/* General Styles */
 body {
     font-family: Arial, sans-serif;
     background-color: #121212;
@@ -13,7 +13,7 @@ body {
     line-height: 1.6;
 }
 
-/* Header styles */
+/* Header Styles */
 header {
     background-color: #1a1a1a;
     color: #f1f1f1;
@@ -158,23 +158,48 @@ footer {
 
 footer p {
     font-size: 1em;
+    margin-bottom: 10px;
 }
 
-/* Button Animation */
-.btn {
-    cursor: pointer;
-    background-color: #e74c3c;
-    color: #f1f1f1;
-    padding: 10px 20px;
-    border-radius: 5px;
-    font-weight: bold;
-    border: none;
-    transition: background-color 0.3s ease, transform 0.3s ease;
+/* Social Media Icons */
+.social-media {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-top: 10px;
 }
 
-.btn:hover {
-    background-color: #c0392b;
-    transform: scale(1.05);
+.social-icon {
+    font-size: 30px; /* Larger icon size */
+    color: #e0e0e0;
+    transition: color 0.3s ease, transform 0.3s ease;
+    text-decoration: none;
+}
+
+.social-icon:hover {
+    transform: scale(1.2);
+    color: #e74c3c; /* Red hover color */
+}
+
+/* Icon Specific Colors */
+.social-icon.linkedin:hover {
+    color: #0077b5;
+}
+
+.social-icon.instagram:hover {
+    color: #c32aa3;
+}
+
+.social-icon.facebook:hover {
+    color: #3b5998;
+}
+
+.social-icon.twitter:hover {
+    color: #1da1f2;
+}
+
+.social-icon.youtube:hover {
+    color: #ff0000;
 }
 
 /* Responsive Design */
@@ -198,5 +223,11 @@ footer p {
 
     .card, .service {
         max-width: 100%;
+    }
+
+    .social-media {
+        flex-direction: column;
+        align-items: center;
+        gap: 10px;
     }
 }
