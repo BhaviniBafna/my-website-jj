@@ -1,128 +1,204 @@
-/* General Section Styles */
+/* General Styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+body {
+    font-family: Arial, sans-serif;
+    line-height: 1.6;
+}
+
+/* Header Styles */
+header {
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+    padding: 20px;
+    background-color: #f8f8f8;
+}
+
+.logo-container {
+    display: flex;
+    align-items: center;
+}
+
+.logo-container img {
+    width: 50px;
+    height: auto;
+    margin-right: 10px;
+}
+
+header h1 {
+    font-size: 24px;
+    color: #333;
+}
+
+nav ul {
+    list-style: none;
+    display: flex;
+}
+
+nav ul li {
+    margin-left: 20px;
+}
+
+nav ul li a {
+    text-decoration: none;
+    color: #333;
+    font-weight: bold;
+}
+
+nav ul li a.btn {
+    background-color: #4CAF50;
+    padding: 10px 20px;
+    color: white;
+    border-radius: 5px;
+}
+
+nav ul li a:hover {
+    color: #4CAF50;
+}
+
+/* Hero Section */
+#hero {
+    background: url('welcome-image.jpg') no-repeat center center/cover;
+    padding: 60px 20px;
+    text-align: center;
+    color: white;
+}
+
+#hero .hero-text h2 {
+    font-size: 36px;
+}
+
+#hero .hero-text p {
+    font-size: 20px;
+}
+
+/* Section Styles */
 .section {
     padding: 40px 20px;
     text-align: center;
 }
 
 .section h2 {
-    font-size: 2rem;
+    font-size: 30px;
     margin-bottom: 20px;
-    color: #333;
 }
 
-/* Header Logo Styling */
-header .logo-container {
+/* Courses Section */
+.card-container {
     display: flex;
-    align-items: center;
-    gap: 10px;
+    justify-content: space-between;
+    flex-wrap: wrap;
 }
 
-header .logo-image {
-    width: 40px; /* Reduced size */
-    height: 40px; /* Maintain aspect ratio */
-    object-fit: contain;
-    border-radius: 50%;
+.card {
+    width: 22%;
+    background-color: #f1f1f1;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    padding: 15px;
+    text-align: center;
 }
 
-header .company-name {
-    font-size: 1.2rem;
-    font-weight: bold;
-    color: #333; /* Matches your theme */
+.card img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
 }
 
-/* Card Container for Courses and Services */
-.card-container,
+.card h3 {
+    font-size: 22px;
+    margin-top: 15px;
+}
+
+.card p {
+    font-size: 16px;
+    color: #555;
+}
+
+/* Services Section */
 .service-container {
     display: flex;
+    justify-content: space-between;
     flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
+}
+
+.service {
+    width: 30%;
+    background-color: #f1f1f1;
+    border-radius: 8px;
+    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    margin-bottom: 20px;
+    padding: 15px;
+    text-align: center;
+}
+
+.service img {
+    width: 100%;
+    height: auto;
+    border-radius: 8px;
+}
+
+.service h3 {
+    font-size: 22px;
+    margin-top: 15px;
+}
+
+.service p {
+    font-size: 16px;
+    color: #555;
+}
+
+/* Footer Styles */
+footer {
+    background-color: #333;
+    color: white;
+    padding: 20px;
+    text-align: center;
+}
+
+footer .social-media {
     margin-top: 20px;
 }
 
-/* Card Styles */
-.card,
-.service {
-    background-color: #fff;
-    border: 1px solid #ddd;
-    border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    width: calc(25% - 20px); /* 4 cards per row */
-    max-width: 300px; /* Optional: Limit maximum width */
-    text-align: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+footer .social-icon {
+    font-size: 20px;
+    color: white;
+    margin: 0 10px;
 }
 
-.card:hover,
-.service:hover {
-    transform: translateY(-5px);
-    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
+footer .social-icon:hover {
+    color: #4CAF50;
 }
 
-/* Image Styles */
-.card img,
-.service img {
-    width: 100%;
-    height: 200px; /* Adjusted for uniformity */
-    object-fit: cover;
-    border-bottom: 1px solid #ddd;
-}
-
-/* Title and Description */
-.card h3,
-.service h3 {
-    font-size: 1.25rem;
-    margin: 15px 0 10px;
-    color: #444;
-}
-
-.card p,
-.service p {
-    font-size: 1rem;
-    color: #666;
-    padding: 0 10px 20px;
-    line-height: 1.5;
-}
-
-/* Floating WhatsApp Icon */
+/* WhatsApp Button */
 .whatsapp-float {
     position: fixed;
     bottom: 20px;
-    left: 20px; /* Moved to bottom-left corner */
-    z-index: 1000;
+    right: 20px;
+    z-index: 100;
 }
 
 .whatsapp-icon {
-    width: 40px; /* Reduced size */
-    height: 40px;
-    border-radius: 50%;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    transition: transform 0.3s ease;
+    width: 60px;
+    height: 60px;
 }
 
-.whatsapp-icon:hover {
-    transform: scale(1.1);
-}
-
-/* Responsive Design */
-@media (max-width: 1024px) {
-    .card,
-    .service {
-        width: calc(33.33% - 20px); /* 3 cards per row */
-    }
-}
-
+/* Responsive Adjustments */
 @media (max-width: 768px) {
-    .card,
-    .service {
-        width: calc(50% - 20px); /* 2 cards per row */
+    .card-container,
+    .service-container {
+        flex-direction: column;
+        align-items: center;
     }
-}
 
-@media (max-width: 480px) {
-    .card,
-    .service {
-        width: 100%; /* 1 card per row */
+    .card, .service {
+        width: 80%;
+        margin-bottom: 20px;
     }
 }
