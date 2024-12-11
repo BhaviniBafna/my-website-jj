@@ -19,14 +19,25 @@ header {
     color: #fff;
 }
 
-header .logo {
+.logo-container {
     display: flex;
     align-items: center;
+    gap: 10px; /* Space between logo and text */
+    padding: 10px 20px;
 }
 
-header .logo img {
-    height: 50px;
-    margin-right: 1rem;
+.logo-image {
+    width: 50px; /* Adjust for desired size */
+    height: 50px; /* Maintain aspect ratio */
+    object-fit: contain;
+    border-radius: 50%; /* Optional: make it circular */
+}
+
+.company-name {
+    font-size: 20px; /* Adjust for desired size */
+    font-weight: bold;
+    margin: 0;
+    color: #333; /* Ensure it matches your theme */
 }
 
 header nav ul {
