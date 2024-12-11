@@ -1,128 +1,91 @@
-/* General Section Styles */
-.section {
-    padding: 40px 20px;
+/* Resetting styles */
+* {
+    margin: 0;
+    padding: 0;
+    box-sizing: border-box;
+}
+
+/* Body and General Styles */
+body {
+    font-family: Arial, sans-serif;
+    background-color: #121212;
+    color: #e0e0e0;
+    line-height: 1.6;
+}
+
+/* Header */
+header {
     text-align: center;
+    background-color: #1a1a1a;
+    padding: 30px 20px;
+    border-bottom: 1px solid #333;
 }
 
-.section h2 {
-    font-size: 2rem;
-    margin-bottom: 20px;
-    color: #333;
+header h1 {
+    font-size: 2em;
+    color: #e74c3c;
+    margin-bottom: 10px;
 }
 
-/* Header Logo Styling */
-header .logo-container {
+header p {
+    font-size: 1.1em;
+    color: #e0e0e0;
+}
+
+/* Services Section */
+.services-section {
     display: flex;
+    flex-direction: column;
     align-items: center;
-    gap: 10px;
+    padding: 40px 20px;
 }
 
-header .logo-image {
-    width: 40px; /* Reduced size */
-    height: 40px; /* Maintain aspect ratio */
-    object-fit: contain;
-    border-radius: 50%;
-}
-
-header .company-name {
-    font-size: 1.2rem;
-    font-weight: bold;
-    color: #333; /* Matches your theme */
-}
-
-/* Card Container for Courses and Services */
-.card-container,
-.service-container {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    gap: 20px;
-    margin-top: 20px;
-}
-
-/* Card Styles */
-.card,
 .service {
-    background-color: #fff;
-    border: 1px solid #ddd;
+    display: flex;
+    flex-direction: row;
+    align-items: center;
+    background-color: #1e1e1e;
     border-radius: 8px;
-    box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
-    overflow: hidden;
-    width: calc(25% - 20px); /* 4 cards per row */
-    max-width: 300px; /* Optional: Limit maximum width */
-    text-align: center;
-    transition: transform 0.3s ease, box-shadow 0.3s ease;
+    margin: 20px;
+    padding: 20px;
+    max-width: 800px;
+    box-shadow: 0 4px 12px rgba(0, 0, 0, 0.3);
+    transition: transform 0.3s ease;
+    width: 90%;
 }
 
-.card:hover,
+.service img {
+    width: 150px;
+    height: 100px;
+    border-radius: 8px;
+    margin-right: 20px;
+}
+
+.service-content h2 {
+    font-size: 1.8em;
+    color: #e74c3c;
+    margin-bottom: 10px;
+}
+
+.service-content p {
+    font-size: 1em;
+    color: #e0e0e0;
+    margin-bottom: 10px;
+}
+
 .service:hover {
     transform: translateY(-5px);
-    box-shadow: 0 6px 10px rgba(0, 0, 0, 0.2);
 }
 
-/* Image Styles */
-.card img,
-.service img {
-    width: 100%;
-    height: 200px; /* Adjusted for uniformity */
-    object-fit: cover;
-    border-bottom: 1px solid #ddd;
+/* Footer */
+footer {
+    text-align: center;
+    background-color: #1a1a1a;
+    padding: 20px;
+    border-top: 1px solid #333;
 }
 
-/* Title and Description */
-.card h3,
-.service h3 {
-    font-size: 1.25rem;
-    margin: 15px 0 10px;
-    color: #444;
-}
-
-.card p,
-.service p {
-    font-size: 1rem;
-    color: #666;
-    padding: 0 10px 20px;
-    line-height: 1.5;
-}
-
-/* Floating WhatsApp Icon */
-.whatsapp-float {
-    position: fixed;
-    bottom: 20px;
-    left: 20px; /* Moved to bottom-left corner */
-    z-index: 1000;
-}
-
-.whatsapp-icon {
-    width: 40px; /* Reduced size */
-    height: 40px;
-    border-radius: 50%;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    transition: transform 0.3s ease;
-}
-
-.whatsapp-icon:hover {
-    transform: scale(1.1);
-}
-
-/* Responsive Design */
-@media (max-width: 1024px) {
-    .card,
-    .service {
-        width: calc(33.33% - 20px); /* 3 cards per row */
-    }
-}
-
-@media (max-width: 768px) {
-    .card,
-    .service {
-        width: calc(50% - 20px); /* 2 cards per row */
-    }
-}
-
-@media (max-width: 480px) {
-    .card,
-    .service {
-        width: 100%; /* 1 card per row */
-    }
+footer p {
+    font-size: 1em;
+    color: #e0e0e0;
 }
