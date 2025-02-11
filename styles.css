@@ -168,3 +168,97 @@ footer {
         align-items: center;
     }
 }
+
+/* About Us Section */
+#about {
+    background: #fff;
+    padding: 60px 20px;
+    text-align: center;
+    max-width: 900px;
+    margin: auto;
+}
+
+#about h2 {
+    font-size: 2.5em;
+    color: #222;
+    margin-bottom: 20px;
+    font-weight: bold;
+    position: relative;
+}
+
+#about h2::after {
+    content: "";
+    width: 80px;
+    height: 4px;
+    background: #f39c12;
+    display: block;
+    margin: 10px auto;
+    border-radius: 2px;
+}
+
+#about h3 {
+    font-size: 1.8em;
+    color: #f39c12;
+    margin-top: 30px;
+    font-weight: bold;
+}
+
+#about p {
+    font-size: 1.1em;
+    color: #555;
+    line-height: 1.6;
+    margin: 15px 0;
+}
+
+#about ul {
+    list-style: none;
+    padding: 0;
+    margin-top: 20px;
+}
+
+#about ul li {
+    font-size: 1.1em;
+    padding: 10px 20px;
+    background: #f8f9fa;
+    border-left: 5px solid #f39c12;
+    margin-bottom: 10px;
+    text-align: left;
+    color: #444;
+    border-radius: 5px;
+}
+
+#about blockquote {
+    font-size: 1.5em;
+    font-style: italic;
+    color: #e67e22;
+    margin: 30px auto;
+    max-width: 700px;
+    background: #fff5e1;
+    padding: 20px;
+    border-left: 5px solid #e67e22;
+    border-radius: 5px;
+}
+
+/* Mobile Responsive */
+@media (max-width: 768px) {
+    #about {
+        padding: 40px 15px;
+    }
+
+    #about h2 {
+        font-size: 2em;
+    }
+
+    #about h3 {
+        font-size: 1.5em;
+    }
+
+    #about p, #about ul li {
+        font-size: 1em;
+    }
+
+    #about blockquote {
+        font-size: 1.2em;
+        padding: 15px;
+    }
+}
