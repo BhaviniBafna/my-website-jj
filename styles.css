@@ -324,6 +324,93 @@ footer {
         padding: 15px;
     }
 }
+
+/* STEM Workshop Section */
+#stem-workshop {
+    background: #f9f9f9;
+    padding: 60px 20px;
+    text-align: center;
+}
+
+#stem-workshop h2 {
+    font-size: 2.5em;
+    color: #222;
+    margin-bottom: 15px;
+}
+
+#stem-workshop p {
+    font-size: 1.1em;
+    color: #444;
+    max-width: 800px;
+    margin: 0 auto 30px;
+    line-height: 1.6;
+}
+
+.highlights, .skills, .why-choose {
+    background: white;
+    padding: 30px;
+    margin: 20px auto;
+    border-radius: 10px;
+    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+    max-width: 900px;
+    text-align: left;
+}
+
+.highlights h3, .skills h3, .why-choose h3 {
+    font-size: 1.8em;
+    color: #e67e22;
+    margin-bottom: 15px;
+}
+
+.highlights ul, .skills ul, .why-choose ul {
+    list-style: none;
+    padding: 0;
+}
+
+.highlights ul li, .skills ul li, .why-choose ul li {
+    font-size: 1.1em;
+    color: #333;
+    margin-bottom: 10px;
+    line-height: 1.5;
+    display: flex;
+    align-items: center;
+}
+
+.highlights ul li::before, .skills ul li::before, .why-choose ul li::before {
+    content: "✔";
+    color: #27ae60;
+    font-weight: bold;
+    margin-right: 10px;
+}
+
+.quote {
+    font-size: 1.5em;
+    color: #16a085;
+    font-style: italic;
+    font-weight: bold;
+    margin-top: 30px;
+}
+
+.join {
+    font-size: 1.4em;
+    color: #222;
+    font-weight: bold;
+    margin-top: 10px;
+}
+
+/* Responsive Design */
+@media (max-width: 768px) {
+    #stem-workshop h2 {
+        font-size: 2em;
+    }
+    
+    .highlights, .skills, .why-choose {
+        padding: 20px;
+        max-width: 100%;
+    }
+}
+
+
 /* ✅ Fix WhatsApp Floating Icon */
 .whatsapp-float {
     position: fixed; /* Keeps it floating */
