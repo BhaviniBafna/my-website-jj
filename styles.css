@@ -2,11 +2,14 @@
 @import url('https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap');
 
 /* General Styles */
-body {
-    font-family: 'Roboto', sans-serif;
+* {
     margin: 0;
     padding: 0;
     box-sizing: border-box;
+}
+
+body {
+    font-family: 'Roboto', sans-serif;
     background-color: #f8f9fa;
     color: #333;
 }
@@ -24,6 +27,8 @@ header {
     top: 0;
     z-index: 1000;
     box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+    flex-wrap: wrap;
+    text-align: center;
 }
 
 .logo-container img {
@@ -32,9 +37,8 @@ header {
 
 nav ul {
     list-style: none;
-    padding: 0;
-    margin: 0;
     display: flex;
+    flex-wrap: wrap;
 }
 
 nav ul li {
@@ -45,7 +49,7 @@ nav ul li a {
     text-decoration: none;
     color: white;
     font-weight: 500;
-    transition: color 0.3s ease-in-out;
+    transition: color 0.3s;
 }
 
 nav ul li a:hover {
@@ -62,7 +66,6 @@ nav ul li a:hover {
 
 #hero h2 {
     font-size: 2.5em;
-    margin-bottom: 10px;
 }
 
 #hero .btn {
@@ -71,7 +74,6 @@ nav ul li a:hover {
     padding: 12px 24px;
     text-decoration: none;
     border-radius: 5px;
-    font-size: 1.2em;
     transition: background 0.3s;
 }
 
@@ -79,23 +81,13 @@ nav ul li a:hover {
     background: #e67e22;
 }
 
-/* Section Styling */
-.section {
-    padding: 60px 20px;
-    text-align: center;
-}
-
-.section h2 {
-    font-size: 2em;
-    margin-bottom: 20px;
-    color: #222;
-}
-
+/* Courses Section */
 .card-container {
     display: flex;
-    justify-content: center;
-    flex-wrap: wrap;
+    flex-direction: column; /* Stacked courses */
+    align-items: center;
     gap: 20px;
+    padding: 40px 20px;
 }
 
 .card {
@@ -103,7 +95,8 @@ nav ul li a:hover {
     padding: 20px;
     border-radius: 10px;
     box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    max-width: 300px;
+    width: 90%; /* Full width on mobile */
+    max-width: 500px; /* Limit max width */
     text-align: center;
 }
 
@@ -114,11 +107,9 @@ nav ul li a:hover {
 
 .card h3 {
     margin: 15px 0;
-    color: #222;
 }
 
 .card p {
-    font-size: 1em;
     color: #666;
 }
 
@@ -137,7 +128,7 @@ nav ul li a:hover {
     background: #2980b9;
 }
 
-/* Footer Styling */
+/* Footer */
 footer {
     background: #222;
     color: white;
@@ -161,140 +152,10 @@ footer {
 @media (max-width: 768px) {
     header {
         flex-direction: column;
-        text-align: center;
     }
+
     .card-container {
-        flex-direction: column;
         align-items: center;
-    }
-}
-
-/* About Us Section */
-#about {
-    background: #fff;
-    padding: 60px 20px;
-    text-align: center;
-    max-width: 900px;
-    margin: auto;
-}
-
-#about h2 {
-    font-size: 2.5em;
-    color: #222;
-    margin-bottom: 20px;
-    font-weight: bold;
-    position: relative;
-}
-
-#about h2::after {
-    content: "";
-    width: 80px;
-    height: 4px;
-    background: #f39c12;
-    display: block;
-    margin: 10px auto;
-    border-radius: 2px;
-}
-
-#about h3 {
-    font-size: 1.8em;
-    color: #f39c12;
-    margin-top: 30px;
-    font-weight: bold;
-}
-
-#about p {
-    font-size: 1.1em;
-    color: #555;
-    line-height: 1.6;
-    margin: 15px 0;
-}
-
-#about ul {
-    list-style: none;
-    padding: 0;
-    margin-top: 20px;
-}
-
-#about ul li {
-    font-size: 1.1em;
-    padding: 10px 20px;
-    background: #f8f9fa;
-    border-left: 5px solid #f39c12;
-    margin-bottom: 10px;
-    text-align: left;
-    color: #444;
-    border-radius: 5px;
-}
-
-#about blockquote {
-    font-size: 1.5em;
-    font-style: italic;
-    color: #e67e22;
-    margin: 30px auto;
-    max-width: 700px;
-    background: #fff5e1;
-    padding: 20px;
-    border-left: 5px solid #e67e22;
-    border-radius: 5px;
-}
-
-/* Mobile Responsive */
-@media (max-width: 768px) {
-    #about {
-        padding: 40px 15px;
-    }
-
-    #about h2 {
-        font-size: 2em;
-    }
-
-    #about h3 {
-        font-size: 1.5em;
-    }
-
-    #about p, #about ul li {
-        font-size: 1em;
-    }
-
-    #about blockquote {
-        font-size: 1.2em;
-        padding: 15px;
-    }
-}
-
-/* ✅ Fix Logo Size */
-.logo-container {
-    display: flex;
-    align-items: center;
-    gap: 10px;
-}
-
-.logo-container img {
-    max-width: 150px;  /* Adjust size */
-    height: auto;      /* Maintain aspect ratio */
-}
-
-.logo-container h1 {
-    font-size: 1.8em;
-    color: white;
-    font-weight: bold;
-}
-
-/* ✅ Mobile Fixes */
-@media (max-width: 768px) {
-    .logo-container img {
-        max-width: 120px; /* Adjust for mobile */
-    }
-
-    .logo-container h1 {
-        font-size: 1.5em;
-    }
-
-    header {
-        flex-direction: column;
-        text-align: center;
-        padding: 10px 20px;
     }
 
     nav ul {
@@ -302,199 +163,7 @@ footer {
         gap: 10px;
     }
 
-    nav ul li {
-        margin: 5px 0;
-    }
-
-    #hero {
-        padding: 100px 20px;
-    }
-
-    .card-container {
-        flex-direction: column;
-        align-items: center;
-    }
-
-    .service-container {
-        flex-direction: column;
-    }
-
-    footer {
-        text-align: center;
-        padding: 15px;
-    }
-}
-
-/* STEM Workshop Section */
-#stem-workshop {
-    background: #f9f9f9;
-    padding: 60px 20px;
-    text-align: center;
-}
-
-#stem-workshop h2 {
-    font-size: 2.5em;
-    color: #222;
-    margin-bottom: 15px;
-}
-
-#stem-workshop p {
-    font-size: 1.1em;
-    color: #444;
-    max-width: 800px;
-    margin: 0 auto 30px;
-    line-height: 1.6;
-}
-
-.highlights, .skills, .why-choose {
-    background: white;
-    padding: 30px;
-    margin: 20px auto;
-    border-radius: 10px;
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-    max-width: 900px;
-    text-align: left;
-}
-
-.highlights h3, .skills h3, .why-choose h3 {
-    font-size: 1.8em;
-    color: #e67e22;
-    margin-bottom: 15px;
-}
-
-.highlights ul, .skills ul, .why-choose ul {
-    list-style: none;
-    padding: 0;
-}
-
-.highlights ul li, .skills ul li, .why-choose ul li {
-    font-size: 1.1em;
-    color: #333;
-    margin-bottom: 10px;
-    line-height: 1.5;
-    display: flex;
-    align-items: center;
-}
-
-.highlights ul li::before, .skills ul li::before, .why-choose ul li::before {
-    content: "✔";
-    color: #27ae60;
-    font-weight: bold;
-    margin-right: 10px;
-}
-
-.quote {
-    font-size: 1.5em;
-    color: #16a085;
-    font-style: italic;
-    font-weight: bold;
-    margin-top: 30px;
-}
-
-.join {
-    font-size: 1.4em;
-    color: #222;
-    font-weight: bold;
-    margin-top: 10px;
-}
-
-/* Responsive Design */
-@media (max-width: 768px) {
-    #stem-workshop h2 {
-        font-size: 2em;
-    }
-    
-    .highlights, .skills, .why-choose {
-        padding: 20px;
-        max-width: 100%;
-    }
-}
-/* General Fix for Full Width */
-.container {
-    max-width: 1200px; /* Increased max width for full screen usage */
-    width: 90%; /* Responsive width */
-    margin: 0 auto; /* Centering the container */
-    padding: 20px;
-}
-
-/* Ensure Sections Use Full Width */
-.section {
-    width: 100%;
-    max-width: 1200px;
-    margin: 0 auto;
-    padding: 60px 20px;
-    text-align: center;
-}
-
-/* Fix Alignment for About Us & STEM Workshop */
-#about-us, #stem-workshop {
-    display: flex;
-    flex-direction: column;
-    align-items: center;
-}
-
-/* Fix Book Now Button Visibility */
-.book-now-btn {
-    position: fixed;
-    bottom: 20px;
-    right: 20px;
-    background: #f39c12;
-    color: white;
-    padding: 12px 24px;
-    font-size: 1.2em;
-    border-radius: 5px;
-    text-decoration: none;
-    transition: background 0.3s;
-    z-index: 999;
-}
-
-.book-now-btn:hover {
-    background: #e67e22;
-}
-
-/* Fix Mobile Responsiveness */
-@media (max-width: 768px) {
-    .container, .section {
-        width: 100%;
-        padding: 20px;
-    }
-    
-    .book-now-btn {
-        font-size: 1em;
-        padding: 10px 20px;
-        bottom: 15px;
-        right: 15px;
-    }
-}
-
-
-
-/* ✅ Fix WhatsApp Floating Icon */
-.whatsapp-float {
-    position: fixed; /* Keeps it floating */
-    bottom: 20px; /* Adjusts distance from bottom */
-    right: 20px; /* Adjusts distance from right */
-    z-index: 1000; /* Ensures it's above other content */
-}
-
-.whatsapp-float img {
-    width: 60px;  /* Set a proper size */
-    height: 60px; /* Maintain aspect ratio */
-    border-radius: 50%; /* Make it circular */
-    box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
-    transition: transform 0.3s ease-in-out;
-}
-
-.whatsapp-float img:hover {
-    transform: scale(1.1); /* Small hover effect */
-}
-
-/* ✅ Responsive Fix for Mobile */
-@media (max-width: 768px) {
-    .whatsapp-float img {
-        width: 50px;
-        height: 50px;
-        bottom: 15px;
-        right: 15px;
+    .logo-container img {
+        max-width: 120px;
     }
 }
