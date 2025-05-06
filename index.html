@@ -1,127 +1,120 @@
 <!DOCTYPE html>
 <html lang="en">
 <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-    <meta http-equiv="X-UA-Compatible" content="ie=edge" />
-    <meta name="description" content="Empowering Young Minds with STEM!" />
-    <meta name="keywords" content="STEM learning, Robotics for kids, Coding courses, Math classes, STEM workshops" />
-    <meta name="author" content="Jai Jinendra Skill N Service" />
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <meta name="description" content="Empowering Young Minds with STEM! Explore Robotics, Coding, and Math courses for kids.">
+    <meta name="keywords" content="STEM learning, Robotics for kids, Coding courses, Math classes, STEM workshops">
+    <meta name="author" content="Jai Jinendra Skill N Service">
     <title>Jai Jinendra Skill N Service | Early STEM Learning</title>
-    <link rel="stylesheet" href="https://jaijinendra.co.in/styles.css" />
-    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet" />
-    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet" />
-    <style>
-        body {
-            font-family: 'Roboto', sans-serif;
-            margin: 0;
-            padding: 0;
-        }
 
-        header {
+    <!-- Stylesheet -->
+    <link rel="stylesheet" href="https://jaijinendra.co.in/styles.css">
+
+    <!-- Google Fonts -->
+    <link href="https://fonts.googleapis.com/css2?family=Roboto:wght@300;400;700&display=swap" rel="stylesheet">
+
+    <!-- FontAwesome for Icons -->
+    <link href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0-beta3/css/all.min.css" rel="stylesheet">
+
+    <!-- Inline Styles -->
+    <style>
+        .card-container {
             display: flex;
             flex-direction: column;
             align-items: center;
-            background-color: #f2f2f2;
-            padding: 10px 20px;
-        }
-
-        .logo-container {
-            display: flex;
-            align-items: center;
-            gap: 10px;
-        }
-
-        .logo-container img {
-            height: 60px;
-        }
-
-        .logo-container h1 {
-            font-size: 1.5rem;
-            color: #333;
-            margin: 0;
-        }
-
-        nav {
             width: 100%;
+        }
+
+        .card {
+            width: 80%;
+            max-width: 600px;
+        }
+
+        .register-button {
+            display: inline-block;
             margin-top: 10px;
-        }
-
-        .nav-links {
-            display: flex;
-            justify-content: center;
-            list-style: none;
-            padding: 0;
-            margin: 0;
-            gap: 15px;
-        }
-
-        .nav-links li a {
-            text-decoration: none;
-            padding: 10px 15px;
-            background-color: #0056b3;
+            padding: 10px 20px;
+            background-color: #f57c00;
             color: white;
+            text-decoration: none;
             border-radius: 5px;
-            display: block;
         }
 
-        .hamburger {
-            display: none;
-            font-size: 1.5rem;
-            cursor: pointer;
-            background: none;
-            border: none;
-            margin-top: 10px;
-        }
-
-        @media (max-width: 768px) {
-            .nav-links {
-                flex-direction: column;
-                align-items: center;
-                display: none;
-                width: 100%;
-                background-color: #f2f2f2;
-                padding-bottom: 10px;
-            }
-
-            .nav-links.active {
-                display: flex;
-            }
-
-            .hamburger {
-                display: block;
-            }
+        .register-button:hover {
+            background-color: #e65100;
         }
     </style>
 </head>
+
 <body>
+    <!-- Header Section -->
+    <header>
+        <div class="logo-container">
+            <img src="final logo.png" alt="Jai Jinendra Skill N Service Logo">
+            <h1>Jai Jinendra Skill N Service</h1>
+        </div>
+        <nav>
+            <ul>
+                <li><a href="#courses">Courses</a></li>
+                <li><a href="#services">Services</a></li>
+                <li><a href="#about">About Us</a></li>
+                <li><a href="#stem-workshop">STEM Workshop</a></li>
+                <li><a href="#community">Community Connect</a></li>
+                <li><a href="https://wa.me/917566553913" target="_blank" class="btn">Book Now</a></li>
+            </ul>
+        </nav>
+    </header>
 
-<header>
-    <div class="logo-container">
-        <img src="https://jaijinendra.co.in/images/logo.png" alt="Jai Jinendra Logo" />
-        <h1>Jai Jinendra Skill N Service</h1>
-    </div>
-    <button class="hamburger" id="hamburgerBtn"><i class="fas fa-bars"></i></button>
-    <nav>
-        <ul class="nav-links" id="navLinks">
-            <li><a href="https://jaijinendra.co.in/">Home</a></li>
-            <li><a href="https://jaijinendra.co.in/about.html">About</a></li>
-            <li><a href="https://jaijinendra.co.in/programs.html">Programs</a></li>
-            <li><a href="https://jaijinendra.co.in/workshops.html">Workshops</a></li>
-            <li><a href="https://jaijinendra.co.in/contact.html">Contact</a></li>
-            <li><a class="btn" href="https://forms.gle/h3C6qdpS3Fq1Ruv19" target="_blank">Book Free Trial</a></li>
-        </ul>
-    </nav>
-</header>
+    <!-- Hero Section -->
+    <section id="hero">
+        <div class="hero-text">
+            <h2>Welcome to Jai Jinendra Skill N Service</h2>
+            <p>Empowering Young Minds with STEM!</p>
+            <p>Join our exciting STEM Workshop and explore Robotics, Coding, and Math in a fun way! 🚀</p>
+            <img src="STEM3.png" alt="STEM Workshop" class="workshop-image" width="300">
+            <a href="https://docs.google.com/forms/d/e/1FAIpQLSd9h6n6iSpHIQFW3wH3ydwU8qMofxhsX1p3pkRQk8rZhckFQw/viewform?usp=header" class="register-button" target="_blank">Register Now</a>
+        </div>
+    </section>
 
-<script>
-    const hamburgerBtn = document.getElementById('hamburgerBtn');
-    const navLinks = document.getElementById('navLinks');
+    <!-- Courses Section -->
+    <section id="courses" class="section">
+        <h2>Our Courses</h2>
+        <div class="card-container">
+            <div class="card">
+                <img src="robot.JPG" alt="Robotics Course">
+                <h3>Coding & Robotics for Kids</h3>
+                <p>Learn block-based coding, electronic circuits, and hands-on projects.</p>
+                <a href="robocoding.pdf" target="_blank" class="btn">Download Details</a>
+            </div>
 
-    hamburgerBtn.addEventListener('click', () => {
-        navLinks.classList.toggle('active');
-    });
-</script>
+            <div class="card">
+                <img src="math.JPG" alt="Maths Course">
+                <h3>Math Mastery</h3>
+                <p>From basic arithmetic to advanced problem-solving, master mathematics.</p>
+                <button onclick="togglePDF('mathPDF')">View Course Details</button>
+                <div id="mathPDF" style="display: none; margin-top: 10px;">
+                    <embed src="final Math Course brochure j+s+ (2).pdf" type="application/pdf" width="100%" height="500px" />
+                </div>
+            </div>
 
+            <div class="card">
+                <img src="python.JPG" alt="STEM Learning">
+                <h3>STEM Learning</h3>
+                <p>Early STEM (Science, Technology, Engineering, and Mathematics) Learning for Kids</p>
+                <a href="STEM.pdf" target="_blank" class="btn">Download Details</a>
+            </div>
+        </div>
+    </section>
+
+    <script>
+        function togglePDF(pdfId) {
+            var pdfContainer = document.getElementById(pdfId);
+            pdfContainer.style.display = pdfContainer.style.display === "none" ? "block" : "none";
+        }
+    </script>
+
+    <!-- More Sections Continue Below (About Us, Workshop, Community, Footer, etc.) -->
 </body>
 </html>
