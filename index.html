@@ -43,8 +43,15 @@
 
     header{position:sticky;top:0;background:#07070aee;backdrop-filter:saturate(180%) blur(10px);border-bottom:1px solid var(--border);z-index:50}
     nav{display:flex;align-items:center;justify-content:space-between;height:64px}
-    .brand{display:flex;align-items:center;gap:12px;font-weight:800;color:var(--text);text-decoration:none}
-    .brand img{height:36px;width:36px;object-fit:contain;border-radius:8px}
+    .brand{display:flex;align-items:center;gap:16px;font-weight:800;color:var(--text);text-decoration:none}
+    
+    .brand img{
+  height:60px;
+  width:auto;
+  object-fit:contain;
+  border-radius:10px;
+}
+
     .nav-links{display:flex;gap:18px;align-items:center}
     .nav-links a{color:var(--muted);text-decoration:none;font-weight:600}
     .nav-links a:hover{color:#fff}
@@ -325,11 +332,19 @@
       <div class="container">
         <h2 style="font-size:32px;margin:0 0 8px">Inside a Jai Jinendra session</h2>
         <p style="color:var(--muted);margin:0 0 16px">A quick peek at how visual, hands‑on learning keeps kids engaged and progressing.</p>
+
         <div class="video">
-          <!-- Replace VIDEO_ID with your YouTube ID, e.g., dQw4w9WgXcQ -->
-          <iframe id="yt" src="https://www.youtube.com/embed/https://www.youtube.com/shorts/9a7HygN5nWU" title="Jai Jinendra Parent-Kid Bond" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
-          <iframe id="yt" src="https://www.youtube.com/embed/https://https://www.youtube.com/watch?v=fevf3swkUWI" title="Jai Jinendra Session" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" allowfullscreen></iframe>
+          <iframe
+            id="yt"
+            src="https://www.youtube.com/embed/9a7HygN5nWU"
+            title="Jai Jinendra Parent–Child Bonding Session"
+            allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share"
+            allowfullscreen>
+          </iframe>
         </div>
+
+        
+        
       </div>
     </section>
 
@@ -489,6 +504,7 @@ When you tap “Send Enquiry,” WhatsApp will open with your details pre-filled
   </script>
 </body>
 </html>
+
 
 
 
