@@ -403,22 +403,50 @@
           </div>
           <div class="card">
             <h3>Quick Enquiry</h3>
-            <form onsubmit="event.preventDefault(); alert('Thanks! We\'ll get back to you shortly.');">
-              <label for="name">Parent Name</label><br>
-              <input id="name" name="name" placeholder="Your name" required style="width:100%;padding:10px;background:#0b0b0f;color:#e5e7eb;border:1px solid var(--border);border-radius:10px;margin:6px 0 12px" />
-              <label for="child">Child & Grade</label><br>
-              <input id="child" name="child" placeholder="e.g., Ishana, Grade 2" style="width:100%;padding:10px;background:#0b0b0f;color:#e5e7eb;border:1px solid var(--border);border-radius:10px;margin:6px 0 12px" />
-              <label for="program">Program</label><br>
-              <select id="program" name="program" style="width:100%;padding:10px;background:#0b0b0f;color:#e5e7eb;border:1px solid var(--border);border-radius:10px;margin:6px 0 12px">
-                <option>Math Mastery</option>
-                <option>Coding & Robotics</option>
-                <option>Math + Coding Combo</option>
-                <option>Early STEM</option>
-              </select>
-              <label for="phone">Phone / Email</label><br>
-              <input id="phone" name="phone" placeholder="Your WhatsApp or email" required style="width:100%;padding:10px;background:#0b0b0f;color:#e5e7eb;border:1px solid var(--border);border-radius:10px;margin:6px 0 12px" />
-              <button class="btn btn-primary" type="submit">Send Enquiry</button>
-            </form>
+            
+            <form onsubmit="
+  event.preventDefault();
+  const parentName = this.name.value;
+  const childInfo = this.child.value;
+  const program = this.program.value;
+  const contactInfo = this.phone.value;
+
+  // your business WhatsApp number in full international format, no +, no spaces
+  const businessNumber = '917566553913';
+
+  const message =
+    'Hi, I am ' + parentName +
+    '. My child is ' + childInfo +
+    ' and I am interested in ' + program +
+    '. You can reach me at ' + contactInfo + '.';
+
+  const waUrl = 'https://wa.me/' + businessNumber + '?text=' + encodeURIComponent(message);
+  window.open(waUrl, '_blank');
+">
+  <label for="name">Parent Name</label><br>
+  <input id="name" name="name" placeholder="Your name" required style="width:100%;padding:10px;background:#0b0b0f;color:#e5e7eb;border:1px solid var(--border);border-radius:10px;margin:6px 0 12px" />
+
+  <label for="child">Child & Grade</label><br>
+  <input id="child" name="child" placeholder="e.g., Ishana, Grade 2" style="width:100%;padding:10px;background:#0b0b0f;color:#e5e7eb;border:1px solid var(--border);border-radius:10px;margin:6px 0 12px" />
+
+  <label for="program">Program</label><br>
+  <select id="program" name="program" style="width:100%;padding:10px;background:#0b0b0f;color:#e5e7eb;border:1px solid var(--border);border-radius:10px;margin:6px 0 12px">
+    <option>Math Mastery</option>
+    <option>Coding & Robotics</option>
+    <option>Math + Coding Combo</option>
+    <option>Early STEM</option>
+  </select>
+
+  <label for="phone">Phone / Email</label><br>
+  <input id="phone" name="phone" placeholder="Your WhatsApp or email" required style="width:100%;padding:10px;background:#0b0b0f;color:#e5e7eb;border:1px solid var(--border);border-radius:10px;margin:6px 0 12px" />
+
+  <button class="btn btn-primary" type="submit">Send Enquiry</button>
+</form>
+<p style="color:var(--muted);font-size:14px;margin-top:8px">
+When you tap “Send Enquiry,” WhatsApp will open with your details pre-filled. Just hit send.
+</p>
+
+            
             <p style="color:var(--muted);font-size:14px;margin-top:8px">(Optional) We can later connect this to Google Forms without code.</p>
           </div>
         </div>
@@ -461,5 +489,6 @@
   </script>
 </body>
 </html>
+
 
 
