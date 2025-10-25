@@ -73,6 +73,19 @@
     .program-list li{display:flex;gap:8px}
     .program-list li::before{content:"✔";font-weight:700;color:var(--success)}
 
+    .program-img {
+  width: 100%;
+  height: auto;
+  border-radius: 12px;
+  margin-bottom: 12px;
+  display: block;
+  object-fit: contain;
+  background: #0b0b0f;
+  border: 1px solid var(--border);
+  box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+}
+
+
     /* Stats */
     .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;background:#0b1220;color:#e5e7eb;border-radius:var(--radius);padding:24px;box-shadow:var(--shadow);border:1px solid var(--border)}
     .stat h3{margin:0;font-size:28px}
@@ -229,7 +242,9 @@
 
           <!-- Math -->
           <article class="card program-card">
-            <div class="program-icon" aria-hidden="true" title="Math icon">
+
+            <img src="math.png" alt="Math Course Banner" class="program-img">
+
               <!-- Calculator SVG -->
               <svg width="28" height="28" viewBox="0 0 24 24" fill="none" class="ico" aria-hidden="true">
                 <rect x="5" y="3" width="14" height="18" rx="3" stroke-width="1.8"/>
@@ -251,7 +266,9 @@
 
           <!-- Coding & Robotics -->
           <article class="card program-card">
-            <div class="program-icon" aria-hidden="true" title="Coding & Robotics icon">
+
+            <img src="robotics.png" alt="Coding and Robotics Course Banner" class="program-img">
+
               <!-- Circuit/Code SVG -->
               <svg width="28" height="28" viewBox="0 0 24 24" fill="none" class="ico" aria-hidden="true">
                 <circle cx="6" cy="12" r="2" stroke-width="1.8"/>
@@ -274,7 +291,9 @@
 
           <!-- Math + Coding Combo -->
           <article class="card program-card">
-            <div class="program-icon" aria-hidden="true" title="Combo icon">
+            
+            <img src="combo.png" alt="Math and coding combo Course Banner" class="program-img">
+
               <!-- Combo SVG (plus sign) -->
               <svg width="28" height="28" viewBox="0 0 24 24" fill="none" class="ico" aria-hidden="true">
                 <rect x="3" y="3" width="8" height="8" rx="2" stroke-width="1.8"/>
@@ -296,7 +315,9 @@
 
           <!-- Early STEM -->
           <article class="card program-card">
-            <div class="program-icon" aria-hidden="true" title="Early STEM icon">
+
+            <img src="stem1.png" alt="Math Course Banner" class="program-img">
+
               <!-- Lightbulb SVG -->
               <svg width="28" height="28" viewBox="0 0 24 24" fill="none" class="ico" aria-hidden="true">
                 <path d="M12 3a6 6 0 0 0-3 11.2V17h6v-2.8A6 6 0 0 0 12 3Z" stroke-width="1.8"/>
@@ -551,6 +572,7 @@ When you tap “Send Enquiry,” WhatsApp will open with your details pre-filled
   </script>
 </body>
 </html>
+
 
 
 
