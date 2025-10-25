@@ -4,7 +4,7 @@
   <meta charset="utf-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1" />
   <title>Jai Jinendra Skill N Service — Eary STEM Learning</title>
-  <meta name="description" content="Parent‑trusted Math, Coding & Robotics programs (Pre‑K to Grade 9). Visual, hands‑on learning aligned to school curriculum and competitive exams. Small batches, personalized support." />
+  <meta name="description" content="Parent-trusted Math, Coding & Robotics programs (Pre-K to Grade 9). Visual, hands-on learning aligned to school curriculum and competitive exams. Small batches, personalized support." />
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;700&family=Poppins:wght@600;700&display=swap" rel="stylesheet">
@@ -26,31 +26,81 @@
       --radius:16px;
     }
     html,body{margin:0}
-    body{font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;color:var(--text);background:var(--bg);line-height:1.6}
+    body{
+      font-family:Inter,system-ui,-apple-system,Segoe UI,Roboto,Helvetica,Arial,sans-serif;
+      color:var(--text);
+      background:var(--bg);
+      line-height:1.6
+    }
     /* Utility */
     .container{max-width:1100px;margin:0 auto;padding:0 20px}
     .section{padding:70px 0}
     .grid{display:grid;gap:24px}
     .cards{grid-template-columns:repeat(12,1fr)}
-    .card{grid-column:span 12;background:var(--card);border:1px solid var(--border);border-radius:var(--radius);box-shadow:var(--shadow);padding:24px}
-    .eyebrow{display:inline-flex;align-items:center;gap:8px;background:#111827;border:1px solid var(--border);color:var(--muted);border-radius:999px;padding:6px 10px;font-weight:600}
+    .card{
+      grid-column:span 12;
+      background:var(--card);
+      border:1px solid var(--border);
+      border-radius:var(--radius);
+      box-shadow:var(--shadow);
+      padding:24px
+    }
+    .eyebrow{
+      display:inline-flex;
+      align-items:center;
+      gap:8px;
+      background:#111827;
+      border:1px solid var(--border);
+      color:var(--muted);
+      border-radius:999px;
+      padding:6px 10px;
+      font-weight:600
+    }
     h1,h2,h3{font-family:Poppins,Inter,sans-serif}
 
-    .btn{display:inline-block;padding:12px 18px;border-radius:12px;font-weight:700;text-decoration:none}
+    .btn{
+      display:inline-block;
+      padding:12px 18px;
+      border-radius:12px;
+      font-weight:700;
+      text-decoration:none
+    }
     .btn-primary{background:var(--primary);color:#fff}
     .btn-primary:hover{background:var(--primary-700)}
-    .btn-ghost{background:transparent;color:var(--text);border:2px solid var(--primary)}
+    .btn-ghost{
+      background:transparent;
+      color:var(--text);
+      border:2px solid var(--primary)
+    }
 
-    header{position:sticky;top:0;background:#07070aee;backdrop-filter:saturate(180%) blur(10px);border-bottom:1px solid var(--border);z-index:50}
-    nav{display:flex;align-items:center;justify-content:space-between;height:64px}
-    .brand{display:flex;align-items:center;gap:16px;font-weight:800;color:var(--text);text-decoration:none}
-    
+    header{
+      position:sticky;
+      top:0;
+      background:#07070aee;
+      backdrop-filter:saturate(180%) blur(10px);
+      border-bottom:1px solid var(--border);
+      z-index:50
+    }
+    nav{
+      display:flex;
+      align-items:center;
+      justify-content:space-between;
+      height:64px
+    }
+    .brand{
+      display:flex;
+      align-items:center;
+      gap:16px;
+      font-weight:800;
+      color:var(--text);
+      text-decoration:none
+    }
     .brand img{
-  height:60px;
-  width:auto;
-  object-fit:contain;
-  border-radius:10px;
-}
+      height:60px;
+      width:auto;
+      object-fit:contain;
+      border-radius:10px;
+    }
 
     .nav-links{display:flex;gap:18px;align-items:center}
     .nav-links a{color:var(--muted);text-decoration:none;font-weight:600}
@@ -58,53 +108,137 @@
     .mobile-toggle{display:none}
 
     /* Hero */
-    .hero{padding:110px 0;background:radial-gradient(80% 60% at 50% 0%, rgba(99,102,241,.25) 0%, rgba(0,0,0,0) 50%), linear-gradient(180deg,#0b0b0f 0%, #000 65%)}
-    .hero h1{font-weight:800;font-size:clamp(28px,4.2vw,44px);margin:8px 0 12px}
-    .hero p{color:var(--muted);font-size:18px;margin:0 0 24px}
+    .hero{
+      padding:110px 0;
+      background:radial-gradient(80% 60% at 50% 0%, rgba(99,102,241,.25) 0%, rgba(0,0,0,0) 50%),
+                 linear-gradient(180deg,#0b0b0f 0%, #000 65%)
+    }
+    .hero h1{
+      font-weight:800;
+      font-size:clamp(28px,4.2vw,44px);
+      margin:8px 0 12px
+    }
+    .hero p{
+      color:var(--muted);
+      font-size:18px;
+      margin:0 0 24px
+    }
     .hero .actions{display:flex;gap:12px;flex-wrap:wrap}
-    .trust{display:flex;gap:12px;flex-wrap:wrap;margin-top:18px;color:#cbd5e1}
-    .trust .pill{background:#0b1220;border:1px solid var(--border);border-radius:999px;padding:6px 10px;font-size:14px}
+    .trust{
+      display:flex;
+      gap:12px;
+      flex-wrap:wrap;
+      margin-top:18px;
+      color:#cbd5e1
+    }
+    .trust .pill{
+      background:#0b1220;
+      border:1px solid var(--border);
+      border-radius:999px;
+      padding:6px 10px;
+      font-size:14px
+    }
 
     /* Programs */
-    .program-card{display:flex;flex-direction:column;gap:12px}
-    .program-icon{width:56px;height:56px;border-radius:14px;background:#111827;border:1px solid var(--border);display:grid;place-items:center}
+    .program-card{
+      display:flex;
+      flex-direction:column;
+      gap:12px
+    }
     .program-meta{color:var(--muted);font-size:14px}
-    .program-list{list-style:none;padding:0;margin:0;display:grid;gap:8px}
-    .program-list li{display:flex;gap:8px}
-    .program-list li::before{content:"✔";font-weight:700;color:var(--success)}
+    .program-list{
+      list-style:none;
+      padding:0;
+      margin:0;
+      display:grid;
+      gap:8px
+    }
+    .program-list li{
+      display:flex;
+      gap:8px
+    }
+    .program-list li::before{
+      content:"✔";
+      font-weight:700;
+      color:var(--success)
+    }
 
+    /* UPDATED: force consistent image box in each card */
     .program-img {
-  width: 100%;
-  height: auto;
-  border-radius: 12px;
-  margin-bottom: 12px;
-  display: block;
-  object-fit: contain;
-  background: #0b0b0f;
-  border: 1px solid var(--border);
-  box-shadow: 0 4px 20px rgba(0,0,0,0.4);
-}
-
+      width: 100%;
+      height: 180px;                /* consistent visual height */
+      object-fit: contain;          /* no cropping */
+      background: #0b0b0f;
+      border: 1px solid var(--border);
+      border-radius: 12px;
+      box-shadow: 0 4px 20px rgba(0,0,0,0.4);
+      margin-bottom: 12px;
+      display: block;
+    }
 
     /* Stats */
-    .stats{display:grid;grid-template-columns:repeat(3,1fr);gap:16px;background:#0b1220;color:#e5e7eb;border-radius:var(--radius);padding:24px;box-shadow:var(--shadow);border:1px solid var(--border)}
+    .stats{
+      display:grid;
+      grid-template-columns:repeat(3,1fr);
+      gap:16px;
+      background:#0b1220;
+      color:#e5e7eb;
+      border-radius:var(--radius);
+      padding:24px;
+      box-shadow:var(--shadow);
+      border:1px solid var(--border)
+    }
     .stat h3{margin:0;font-size:28px}
     .stat p{margin:6px 0 0;color:#a3a9b7}
 
     /* Media */
-    .video{position:relative;height:0;padding-bottom:56.25%;border-radius:16px;overflow:hidden;border:1px solid var(--border);box-shadow:var(--shadow)}
-    .video iframe{position:absolute;inset:0;width:100%;height:100%;border:0}
+    .video{
+      position:relative;
+      height:0;
+      padding-bottom:56.25%;
+      border-radius:16px;
+      overflow:hidden;
+      border:1px solid var(--border);
+      box-shadow:var(--shadow)
+    }
+    .video iframe{
+      position:absolute;
+      inset:0;
+      width:100%;
+      height:100%;
+      border:0
+    }
 
     /* Testimonials */
     .quote{font-style:italic;color:#d1d5db}
     .avatar{display:flex;align-items:center;gap:12px;margin-top:12px}
-    .avatar img{width:40px;height:40px;border-radius:50%;object-fit:cover}
+    .avatar img{
+      width:40px;
+      height:40px;
+      border-radius:50%;
+      object-fit:cover
+    }
 
     /* CTA band */
-    .cta{background:linear-gradient(90deg,var(--primary),#4c51bf);color:#fff;border-radius:var(--radius);padding:28px;display:flex;flex-wrap:wrap;align-items:center;justify-content:space-between;gap:16px}
+    .cta{
+      background:linear-gradient(90deg,var(--primary),#4c51bf);
+      color:#fff;
+      border-radius:var(--radius);
+      padding:28px;
+      display:flex;
+      flex-wrap:wrap;
+      align-items:center;
+      justify-content:space-between;
+      gap:16px
+    }
     .cta h3{margin:0;font-size:22px}
 
-    footer{padding:48px 0;background:var(--bg-soft);border-top:1px solid var(--border);color:#cbd5e1}
+    footer{
+      padding:48px 0;
+      background:var(--bg-soft);
+      border-top:1px solid var(--border);
+      color:#cbd5e1
+    }
     footer a{text-decoration:none;color:#cbd5e1}
 
     /* Responsive */
@@ -116,11 +250,28 @@
     }
     @media(max-width:900px){
       .nav-links{display:none}
-      .mobile-toggle{display:block;border:1px solid var(--border);background:#0b0b0f;border-radius:10px;color:#e5e7eb;padding:8px 10px}
+      .mobile-toggle{
+        display:block;
+        border:1px solid var(--border);
+        background:#0b0b0f;
+        border-radius:10px;
+        color:#e5e7eb;
+        padding:8px 10px
+      }
       .mobile-menu{display:none}
-      .mobile-menu.open{display:flex;flex-direction:column;gap:12px;padding:16px}
-      .mobile-menu a{color:var(--muted);text-decoration:none;font-weight:600}
+      .mobile-menu.open{
+        display:flex;
+        flex-direction:column;
+        gap:12px;
+        padding:16px
+      }
+      .mobile-menu a{
+        color:var(--muted);
+        text-decoration:none;
+        font-weight:600
+      }
     }
+
     /* Simple SVG icon color helper */
     .ico{stroke:#AEB8FE}
   </style>
@@ -129,7 +280,6 @@
   <header>
     <div class="container">
       <nav aria-label="Main">
-        
         <a class="brand" href="#home" aria-label="J+S+ Home">
           <img src="JSlogo.png" alt="J+S+™ logo" onerror="this.style.display='none'"/>
           <span>J+S+™ (Jai Jinendra Skill n Service)</span>
@@ -160,7 +310,6 @@
       <div class="container">
         <div class="grid">
           <div class="hero-left">
-
             <span class="eyebrow">J+S+™ • Early STEM • Future-Ready Learning</span>
             <h1>Future-ready skills for curious kids</h1>
             <p>We are J+S+™ (Jai Jinendra Skill n Service). Our expert team has 10+ years of experience helping children build real understanding in Math, Coding, Robotics, and Early STEM. No mugging up — kids learn by seeing, doing, and explaining. All aligned with school curriculum and competitive expectations.</p>
@@ -171,33 +320,33 @@
             </div>
             <div class="trust">
               <span class="pill">Max 1:4 ideal batch size</span>
-              <span class="pill">Structured grade‑wise curriculum</span>
+              <span class="pill">Structured grade-wise curriculum</span>
               <span class="pill">Personalized support for every child</span>
             </div>
           </div>
-            <div class="hero-right">
-  <div class="card" aria-label="Hero Image"
-     style="
-       padding:0;
-       overflow:hidden;
-       background:#0b0b0f;
-       border:1px solid rgba(99,102,241,.4);
-       border-radius:20px;
-       box-shadow:0 20px 60px rgba(0,0,0,.8);
-     ">
-    <img src="hero.png"
-         alt="Happy kids learning with a supportive teacher"
-         style="
-           width:100%;
-           height:100%;
-           max-height:480px;
-           object-fit:cover;
-           display:block;
-         " />
-  </div>
-</div>
 
-          
+          <div class="hero-right">
+            <div class="card" aria-label="Hero Image"
+              style="
+                padding:0;
+                overflow:hidden;
+                background:#0b0b0f;
+                border:1px solid rgba(99,102,241,.4);
+                border-radius:20px;
+                box-shadow:0 20px 60px rgba(0,0,0,.8);
+              ">
+              <img src="hero.png"
+                alt="Happy kids learning with a supportive teacher"
+                style="
+                  width:100%;
+                  height:100%;
+                  max-height:480px;
+                  object-fit:cover;
+                  display:block;
+                " />
+            </div>
+          </div>
+
         </div>
       </div>
     </section>
@@ -205,30 +354,26 @@
     <!-- About Company -->
     <section id="about" class="section" style="background:var(--bg-soft)">
       <div class="container">
-
         <h2 style="font-size:32px;margin:0 0 8px">About J+S+™ (Jai Jinendra Skill n Service)</h2>
         <p style="color:var(--muted);margin:0 0 16px;max-width:860px">
-        J+S+™ is built on one promise: early STEM and future-ready learning that actually sticks.
-
-        For over 10 years, our team has guided children from Pre-K to Grade 9 in Math, Coding, Robotics, and problem solving. We use a highly visual, hands-on approach so kids don’t just memorize — they understand, apply, and explain. Our curriculum is closely aligned with school topics and prepares students for competitive expectations. Parents choose us because of our small batch size, our personal feedback, and our consistency.
+          J+S+™ is built on one promise: early STEM and future-ready learning that actually sticks.
+          <br><br>
+          For over 10 years, our team has guided children from Pre-K to Grade 9 in Math, Coding, Robotics, and problem solving. We use a highly visual, hands-on approach so kids don’t just memorize — they understand, apply, and explain. Our curriculum is closely aligned with school topics and prepares students for competitive expectations. Parents choose us because of our small batch size, our personal feedback, and our consistency.
         </p>
 
-          <div class="card"><h3>What makes us different</h3>
-            <ul class="program-list">
-
-              <li><strong>Visual, hands-on learning</strong> — math, logic, and robotics taught through real objects, demos, circuits, and sketches.</li>
-              <li><strong>No mugging up</strong> — we build thinking, not copying. Kids explain in their own words.</li>
-              <li><strong>Aligned with school</strong> — follows current school topics and supports competitive exam foundations.</li>
-              <li><strong>Expert guidance</strong> — sessions are designed and led by a team with 10+ years of teaching and mentoring experience.</li>
-
-            </ul>
-          </div>
-          <div class="card"><h3>Parents at the center</h3>
-            <p style="color:var(--muted)">You get visibility into progress, timely feedback, and make‑up options when life happens. We aim to be your partner in your child’s learning journey.</p>
-          </div>
-          <div class="card"><h3>Outcomes you can see</h3>
-            <p style="color:var(--muted)">Confidence with numbers and logic, a portfolio of mini‑projects, and steady improvement in schoolwork and tests.</p>
-          </div>
+        <div class="card"><h3>What makes us different</h3>
+          <ul class="program-list">
+            <li><strong>Visual, hands-on learning</strong> — math, logic, and robotics taught through real objects, demos, circuits, and sketches.</li>
+            <li><strong>No mugging up</strong> — we build thinking, not copying. Kids explain in their own words.</li>
+            <li><strong>Aligned with school</strong> — follows current school topics and supports competitive exam foundations.</li>
+            <li><strong>Expert guidance</strong> — sessions are designed and led by a team with 10+ years of teaching and mentoring experience.</li>
+          </ul>
+        </div>
+        <div class="card"><h3>Parents at the center</h3>
+          <p style="color:var(--muted)">You get visibility into progress, timely feedback, and make-up options when life happens. We aim to be your partner in your child’s learning journey.</p>
+        </div>
+        <div class="card"><h3>Outcomes you can see</h3>
+          <p style="color:var(--muted)">Confidence with numbers and logic, a portfolio of mini-projects, and steady improvement in schoolwork and tests.</p>
         </div>
       </div>
     </section>
@@ -242,21 +387,12 @@
 
           <!-- Math -->
           <article class="card program-card">
-
-            <img src="math.png" alt="Math Course Banner" class="program-img">
-
-              <!-- Calculator SVG -->
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" class="ico" aria-hidden="true">
-                <rect x="5" y="3" width="14" height="18" rx="3" stroke-width="1.8"/>
-                <rect x="7" y="6" width="10" height="3" rx="1" stroke-width="1.8"/>
-                <path d="M8 12h2M8 15h2M8 18h2M14 12h2M14 15h2M14 18h2" stroke-width="1.8"/>
-              </svg>
-            </div>
+            <img src="math.png" alt="Math Course Banner" class="program-img" />
             <h3>Math Mastery (G1–G9)</h3>
             <p class="program-meta">2×/week • 60 mins • Small groups</p>
             <ul class="program-list">
-              <li>Strengthen number sense, problem‑solving, and accuracy</li>
-              <li>Grade‑wise syllabus aligned to school + competitive readiness</li>
+              <li>Strengthen number-sense, problem-solving, and accuracy</li>
+              <li>Grade-wise syllabus aligned to school + competitive readiness</li>
               <li>Weekly checks and parent feedback for steady progress</li>
             </ul>
             <div>
@@ -266,22 +402,12 @@
 
           <!-- Coding & Robotics -->
           <article class="card program-card">
-
-            <img src="robotics.png" alt="Coding and Robotics Course Banner" class="program-img">
-
-              <!-- Circuit/Code SVG -->
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" class="ico" aria-hidden="true">
-                <circle cx="6" cy="12" r="2" stroke-width="1.8"/>
-                <circle cx="18" cy="6" r="2" stroke-width="1.8"/>
-                <circle cx="18" cy="18" r="2" stroke-width="1.8"/>
-                <path d="M8 12h6M18 8v4M18 16v-4" stroke-width="1.8"/>
-              </svg>
-            </div>
+            <img src="robotics.png" alt="Coding and Robotics Course Banner" class="program-img" />
             <h3>Coding & Robotics (G2–G9)</h3>
             <p class="program-meta">Weekly projects • Circuits & logic</p>
             <ul class="program-list">
               <li>Block coding, sensors, and circuit simulation (Tinkercad)</li>
-              <li>Documented mini‑projects that build real‑world thinking</li>
+              <li>Documented mini-projects that build real-world thinking</li>
               <li>Creativity + logic with safe, structured guidance</li>
             </ul>
             <div>
@@ -291,22 +417,13 @@
 
           <!-- Math + Coding Combo -->
           <article class="card program-card">
-            
-            <img src="combo.png" alt="Math and coding combo Course Banner" class="program-img">
-
-              <!-- Combo SVG (plus sign) -->
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" class="ico" aria-hidden="true">
-                <rect x="3" y="3" width="8" height="8" rx="2" stroke-width="1.8"/>
-                <rect x="13" y="13" width="8" height="8" rx="2" stroke-width="1.8"/>
-                <path d="M17 9V7M17 7V5M17 7H15M17 7h2" stroke-width="1.8"/>
-              </svg>
-            </div>
+            <img src="combo.png" alt="Math and coding combo Course Banner" class="program-img" />
             <h3>Math + Coding Combo (G2–G8)</h3>
             <p class="program-meta">Integrated thinking • Best of both</p>
             <ul class="program-list">
-              <li>Apply math through coding mini‑projects (patterns, logic, geometry)</li>
+              <li>Apply math through coding mini-projects (patterns, logic, geometry)</li>
               <li>Perfect for kids who love both numbers and tech</li>
-              <li>Improves reasoning, speed, and creative problem‑solving</li>
+              <li>Improves reasoning, speed, and creative problem-solving</li>
             </ul>
             <div>
               <a class="btn btn-primary" href="#contact">Check Availability</a>
@@ -315,26 +432,19 @@
 
           <!-- Early STEM -->
           <article class="card program-card">
-
-            <img src="stem.png" alt="Math Course Banner" class="program-img">
-
-              <!-- Lightbulb SVG -->
-              <svg width="28" height="28" viewBox="0 0 24 24" fill="none" class="ico" aria-hidden="true">
-                <path d="M12 3a6 6 0 0 0-3 11.2V17h6v-2.8A6 6 0 0 0 12 3Z" stroke-width="1.8"/>
-                <path d="M9 21h6" stroke-width="1.8"/>
-              </svg>
-            </div>
-            <h3>Early STEM (Pre‑K–G2)</h3>
+            <img src="stem.png" alt="Early STEM Course Banner" class="program-img" />
+            <h3>Early STEM (Pre-K–G2)</h3>
             <p class="program-meta">Playful builds • Fine motor • Curiosity</p>
             <ul class="program-list">
-              <li>Light‑up cards, magnets, simple machines & art</li>
+              <li>Light-up cards, magnets, simple machines & art</li>
               <li>Early numeracy and pattern sense through play</li>
-              <li>Parent‑child activities to bond & learn</li>
+              <li>Parent-child activities to bond & learn</li>
             </ul>
             <div>
               <a class="btn btn-primary" href="#contact">Enquire</a>
             </div>
           </article>
+
         </div>
       </div>
     </section>
@@ -342,10 +452,9 @@
     <!-- Why Us / Differentiators -->
     <section id="why" class="section" style="background:var(--bg-soft)">
       <div class="container">
-
         <h2 style="font-size:32px;margin:0 0 8px">Why families choose J+S+™</h2>
         <p style="color:var(--muted);margin:0 0 24px">
-        Early STEM focus • Future-ready learning • Decade of trusted results.
+          Early STEM focus • Future-ready learning • Decade of trusted results.
         </p>
 
         <div class="stats" role="list">
@@ -353,15 +462,15 @@
           <div class="stat" role="listitem"><h3>500+</h3><p>Sessions delivered</p></div>
           <div class="stat" role="listitem"><h3>95%</h3><p>Parents recommend</p></div>
         </div>
+
         <div class="grid cards" style="margin-top:24px">
-          <div class="card"><h3>Visualize everything</h3><p style="color:var(--muted)">From place‑value ladders to circuit diagrams—students see concepts before they solve them.</p></div>
+          <div class="card"><h3>Visualize everything</h3><p style="color:var(--muted)">From place-value ladders to circuit diagrams—students see concepts before they solve them.</p></div>
           <div class="card"><h3>No mugging up</h3><p style="color:var(--muted)">We build understanding first, then speed and accuracy—so kids can explain their thinking.</p></div>
           <div class="card"><h3>Aligned & competitive</h3><p style="color:var(--muted)">Follows school syllabus with regular practice for competitive exams where relevant.</p></div>
           <div class="card">
             <h3>Experienced mentors</h3>
             <p style="color:var(--muted)">Our expert team has 10+ years of experience teaching Math, Coding, and Robotics — in small, high-attention groups. You’re not guessing with us; you’re guided.</p>
           </div>
-
         </div>
       </div>
     </section>
@@ -369,10 +478,9 @@
     <!-- Reviews (Link to Google Reviews) -->
     <section id="reviews" class="section">
       <div class="container">
-
         <h2 style="font-size:32px;margin:0 0 8px">Parent Reviews</h2>
         <p style="color:var(--muted);margin:0 0 16px">
-        Families trust J+S+™ because they see real growth — confidence, clarity, and interest in learning.
+          Families trust J+S+™ because they see real growth — confidence, clarity, and interest in learning.
         </p>
 
         <div class="card" style="display:flex;align-items:center;justify-content:space-between;gap:16px;flex-wrap:wrap">
@@ -380,7 +488,6 @@
             <h3 style="margin:0 0 6px">See our Google Reviews</h3>
             <p style="color:var(--muted);margin:0">Transparent feedback—because your trust matters.</p>
           </div>
-          <!-- Replace the href with your actual Google Reviews share link -->
           <a class="btn btn-primary" target="_blank" rel="noopener nofollow" href="https://g.page/r/Cb8-S1Xj2-_OEBM/review">Open Google Reviews</a>
         </div>
       </div>
@@ -390,7 +497,7 @@
     <section id="video" class="section" style="background:var(--bg-soft)">
       <div class="container">
         <h2 style="font-size:32px;margin:0 0 8px">Inside a Jai Jinendra session</h2>
-        <p style="color:var(--muted);margin:0 0 16px">A quick peek at how visual, hands‑on learning keeps kids engaged and progressing.</p>
+        <p style="color:var(--muted);margin:0 0 16px">A quick peek at how visual, hands-on learning keeps kids engaged and progressing.</p>
 
         <div class="video">
           <iframe
@@ -401,9 +508,6 @@
             allowfullscreen>
           </iframe>
         </div>
-
-        
-        
       </div>
     </section>
 
@@ -428,7 +532,7 @@
             </div>
           </div>
           <div class="card">
-            <p class="quote">“Professional, friendly, and consistent. We saw real improvement within weeks, especially in problem‑solving and neat presentation.”</p>
+            <p class="quote">“Professional, friendly, and consistent. We saw real improvement within weeks, especially in problem-solving and neat presentation.”</p>
             <div class="avatar">
               <img src="https://images.unsplash.com/photo-1547425260-76bcadfb4f2c?q=80&w=200&auto=format&fit=crop" alt="Parent avatar">
               <div><strong>Vikas</strong><br/><span style="color:var(--muted)">Parent of Grade 4</span></div>
@@ -445,7 +549,7 @@
         <div class="grid cards">
           <div class="card"><h3>How big are your batches?</h3><p style="color:var(--muted)">We keep it small—our ideal is 1:4—to ensure personalized attention and clear feedback.</p></div>
           <div class="card"><h3>Do you follow school topics?</h3><p style="color:var(--muted)">Yes. Our plan aligns with school curriculum and adds practice for competitive exams as needed.</p></div>
-          <div class="card"><h3>What if we miss a class?</h3><p style="color:var(--muted)">Life happens. We offer make‑up options and keep you informed through quick updates.</p></div>
+          <div class="card"><h3>What if we miss a class?</h3><p style="color:var(--muted)">Life happens. We offer make-up options and keep you informed through quick updates.</p></div>
         </div>
       </div>
     </section>
@@ -477,50 +581,48 @@
           </div>
           <div class="card">
             <h3>Quick Enquiry</h3>
-            
             <form onsubmit="
-  event.preventDefault();
-  const parentName = this.name.value;
-  const childInfo = this.child.value;
-  const program = this.program.value;
-  const contactInfo = this.phone.value;
+              event.preventDefault();
+              const parentName = this.name.value;
+              const childInfo = this.child.value;
+              const program = this.program.value;
+              const contactInfo = this.phone.value;
 
-  // your business WhatsApp number in full international format, no +, no spaces
-  const businessNumber = '917566553913';
+              // your business WhatsApp number in full international format, no +, no spaces
+              const businessNumber = '917566553913';
 
-  const message =
-    'Hi, I am ' + parentName +
-    '. My child is ' + childInfo +
-    ' and I am interested in ' + program +
-    '. You can reach me at ' + contactInfo + '.';
+              const message =
+                'Hi, I am ' + parentName +
+                '. My child is ' + childInfo +
+                ' and I am interested in ' + program +
+                '. You can reach me at ' + contactInfo + '.';
 
-  const waUrl = 'https://wa.me/' + businessNumber + '?text=' + encodeURIComponent(message);
-  window.open(waUrl, '_blank');
-">
-  <label for="name">Parent Name</label><br>
-  <input id="name" name="name" placeholder="Your name" required style="width:100%;padding:10px;background:#0b0b0f;color:#e5e7eb;border:1px solid var(--border);border-radius:10px;margin:6px 0 12px" />
+              const waUrl = 'https://wa.me/' + businessNumber + '?text=' + encodeURIComponent(message);
+              window.open(waUrl, '_blank');
+            ">
+              <label for="name">Parent Name</label><br>
+              <input id="name" name="name" placeholder="Your name" required style="width:100%;padding:10px;background:#0b0b0f;color:#e5e7eb;border:1px solid var(--border);border-radius:10px;margin:6px 0 12px" />
 
-  <label for="child">Child & Grade</label><br>
-  <input id="child" name="child" placeholder="e.g., Ishana, Grade 2" style="width:100%;padding:10px;background:#0b0b0f;color:#e5e7eb;border:1px solid var(--border);border-radius:10px;margin:6px 0 12px" />
+              <label for="child">Child & Grade</label><br>
+              <input id="child" name="child" placeholder="e.g., Ishana, Grade 2" style="width:100%;padding:10px;background:#0b0b0f;color:#e5e7eb;border:1px solid var(--border);border-radius:10px;margin:6px 0 12px" />
 
-  <label for="program">Program</label><br>
-  <select id="program" name="program" style="width:100%;padding:10px;background:#0b0b0f;color:#e5e7eb;border:1px solid var(--border);border-radius:10px;margin:6px 0 12px">
-    <option>Math Mastery</option>
-    <option>Coding & Robotics</option>
-    <option>Math + Coding Combo</option>
-    <option>Early STEM</option>
-  </select>
+              <label for="program">Program</label><br>
+              <select id="program" name="program" style="width:100%;padding:10px;background:#0b0b0f;color:#e5e7eb;border:1px solid var(--border);border-radius:10px;margin:6px 0 12px">
+                <option>Math Mastery</option>
+                <option>Coding & Robotics</option>
+                <option>Math + Coding Combo</option>
+                <option>Early STEM</option>
+              </select>
 
-  <label for="phone">Phone / Email</label><br>
-  <input id="phone" name="phone" placeholder="Your WhatsApp or email" required style="width:100%;padding:10px;background:#0b0b0f;color:#e5e7eb;border:1px solid var(--border);border-radius:10px;margin:6px 0 12px" />
+              <label for="phone">Phone / Email</label><br>
+              <input id="phone" name="phone" placeholder="Your WhatsApp or email" required style="width:100%;padding:10px;background:#0b0b0f;color:#e5e7eb;border:1px solid var(--border);border-radius:10px;margin:6px 0 12px" />
 
-  <button class="btn btn-primary" type="submit">Send Enquiry</button>
-</form>
-<p style="color:var(--muted);font-size:14px;margin-top:8px">
-When you tap “Send Enquiry,” WhatsApp will open with your details pre-filled. Just hit send.
-</p>
+              <button class="btn btn-primary" type="submit">Send Enquiry</button>
+            </form>
+            <p style="color:var(--muted);font-size:14px;margin-top:8px">
+              When you tap “Send Enquiry,” WhatsApp will open with your details pre-filled. Just hit send.
+            </p>
 
-            
             <p style="color:var(--muted);font-size:14px;margin-top:8px">(Optional) We can later connect this to Google Forms without code.</p>
           </div>
         </div>
@@ -532,23 +634,20 @@ When you tap “Send Enquiry,” WhatsApp will open with your details pre-filled
     <div class="container">
       <div style="display:flex;flex-wrap:wrap;gap:16px;align-items:flex-start;justify-content:space-between">
         <div>
-
           <strong style="font-size:18px">J+S+™ (Jai Jinendra Skill n Service)</strong><br>
           <span style="color:var(--muted);font-size:14px">
-          Early STEM and future-ready learning. Hands-on. Visual. Proven.
+            Early STEM and future-ready learning. Hands-on. Visual. Proven.
           </span>
           <div style="color:var(--muted);font-size:14px;margin-top:8px">
-          10+ years of experience in Math, Coding & Robotics education.
-        </div>
-      <div style="margin-top:12px;color:#9ca3af;font-size:14px">
-    © <span id="year"></span> J+S+™. All rights reserved.
-  </div>
-
+            10+ years of experience in Math, Coding & Robotics education.
+          </div>
+          <div style="margin-top:12px;color:#9ca3af;font-size:14px">
+            © <span id="year"></span> J+S+™. All rights reserved.
+          </div>
         </div>
         <div>
           <div style="font-weight:700;margin-bottom:8px">Follow us</div>
           <div style="display:flex;gap:12px;flex-wrap:wrap">
-            <!-- Replace the # with your actual profile links -->
             <a href="https://www.instagram.com/jjskillnservice/" aria-label="Instagram" target="_blank" rel="noopener" title="Instagram">
               <svg width="28" height="28" viewBox="0 0 24 24" fill="none"><rect x="3" y="3" width="18" height="18" rx="5" stroke="#cbd5e1"/><circle cx="12" cy="12" r="4" stroke="#cbd5e1"/><circle cx="17.5" cy="6.5" r="1.2" fill="#cbd5e1"/></svg>
             </a>
@@ -572,14 +671,3 @@ When you tap “Send Enquiry,” WhatsApp will open with your details pre-filled
   </script>
 </body>
 </html>
-
-
-
-
-
-
-
-
-
-
-
