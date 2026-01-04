@@ -1,0 +1,749 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Teacher Fee Statement Generator</title>
+
+  <!-- PDF libraries -->
+  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jspdf-autotable@3.8.2/dist/jspdf.plugin.autotable.min.js"></script>
+
+  <style>
+    :root{
+      --bd:#e5e7eb; --txt:#111827; --muted:#6b7280; --bg:#f9fafb; --card:#ffffff;
+      --accent:#111827; --soft:#fafafa;
+    }
+    *{ box-sizing:border-box; }
+    body{ font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; margin:0; color:var(--txt); background:var(--bg); }
+    .wrap{ max-width:1200px; margin:24px auto; padding:0 16px; }
+    .card{ background:var(--card); border:1px solid var(--bd); border-radius:14px; padding:16px; box-shadow:0 1px 2px rgba(0,0,0,.04); }
+    h1{ font-size:20px; margin:0 0 12px; }
+    h2{ font-size:16px; margin:18px 0 10px; }
+    .grid{ display:grid; grid-template-columns: repeat(12, 1fr); gap:12px; }
+    .col-3{ grid-column: span 3; }
+    .col-4{ grid-column: span 4; }
+    .col-6{ grid-column: span 6; }
+    .col-12{ grid-column: span 12; }
+
+    label{ font-size:12px; color:var(--muted); display:block; margin:0 0 6px; }
+    input, select, textarea, button{
+      width:100%; border:1px solid var(--bd); border-radius:10px;
+      padding:10px 10px; font-size:14px; background:#fff;
+    }
+    textarea{ min-height: 40px; resize: vertical; }
+    button{ cursor:pointer; font-weight:600; }
+    .btn-row{ display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
+    .btn{ width:auto; padding:10px 14px; }
+    .btn.primary{ background:var(--accent); color:#fff; border-color:var(--accent); }
+    .btn.ghost{ background:#fff; }
+    .btn.danger{ background:#fff; border-color:#ef4444; color:#b91c1c; }
+
+    .hint{ font-size:12px; color:var(--muted); margin-top:6px; }
+    .pill{
+      display:inline-flex; align-items:center; gap:8px;
+      font-size:12px; color:var(--muted);
+      padding:6px 10px; border:1px solid var(--bd); border-radius:999px; background:#fff;
+    }
+
+    .calendar{ display:grid; grid-template-columns: repeat(7, 1fr); gap:8px; }
+    .dow{ font-size:12px; color:var(--muted); text-align:center; }
+    .day{
+      border:1px solid var(--bd); border-radius:12px; padding:10px; background:#fff;
+      display:flex; flex-direction:column; gap:6px; min-height:76px; user-select:none;
+    }
+    .day .top{ display:flex; justify-content:space-between; align-items:center; }
+    .day .num{ font-weight:800; }
+    .day .meta{ font-size:11px; color:var(--muted); }
+    .day.selected{ outline:2px solid var(--accent); }
+    .day .tag{ font-size:11px; color:var(--muted); min-height:14px; }
+    .day.soft{ background: var(--soft); }
+
+    .table-wrap{ overflow:auto; border:1px solid var(--bd); border-radius:12px; background:#fff; }
+    table{ width:100%; border-collapse:collapse; min-width:1050px; }
+    th, td{ border-bottom:1px solid var(--bd); padding:10px; vertical-align:top; }
+    th{ text-align:left; font-size:12px; color:var(--muted); background:var(--soft); position:sticky; top:0; z-index:1; }
+    td input, td select, td textarea{ width:100%; }
+    .right{ text-align:right; }
+
+    .row-tools{ display:flex; gap:6px; flex-wrap:wrap; }
+    .chip{
+      width:auto; padding:8px 10px; border-radius:999px; border:1px solid var(--bd);
+      background:#fff; font-size:12px; cursor:pointer;
+    }
+    .chip.warn{ border-color:#f59e0b; color:#92400e; }
+    .chip.good{ border-color:#10b981; color:#065f46; }
+    .chip.zero{ border-color:#d1d5db; color:#6b7280; }
+    .chip.bad{ border-color:#ef4444; color:#991b1b; }
+
+    .footer{ font-size:12px; color:var(--muted); margin-top:10px; line-height:1.55; }
+    .summary-card{ padding:12px; border:1px solid var(--bd); border-radius:12px; background:#fff; }
+    .kv{ display:flex; justify-content:space-between; gap:16px; }
+    .kv b{ font-variant-numeric: tabular-nums; }
+    .spacer{ height:6px; }
+
+    /* Lock screen */
+    .lock-wrap{
+      min-height: calc(100vh - 48px);
+      display:flex; align-items:center; justify-content:center;
+    }
+    .lock-card{
+      width: min(520px, 100%);
+      background:#fff; border:1px solid var(--bd); border-radius:16px;
+      padding:18px; box-shadow:0 6px 20px rgba(0,0,0,.06);
+    }
+    .lock-title{ font-size:18px; font-weight:800; margin:0 0 6px; text-align:center; }
+    .lock-sub{ font-size:13px; color:var(--muted); margin:0 0 14px; text-align:center; }
+    .lock-err{ display:none; color:#b91c1c; font-size:12px; margin-top:8px; text-align:center; }
+    .logo-preview{
+      display:flex; justify-content:center; margin:8px 0 10px;
+    }
+    .logo-preview img{
+      width:90px; height:90px; object-fit:contain;
+      border-radius:12px; border:1px solid var(--bd); background:#fff;
+      padding:6px;
+    }
+
+    @media (max-width: 980px){
+      .col-3,.col-4,.col-6{ grid-column: span 12; }
+    }
+  </style>
+</head>
+
+<body>
+  <!-- LOCK SCREEN -->
+  <div id="lockScreen" class="wrap lock-wrap">
+    <div class="lock-card">
+      <div class="logo-preview"><img id="lockLogo" alt="Logo"/></div>
+      <p class="lock-title">Teacher Fee Statement</p>
+      <p class="lock-sub">Enter access code to continue</p>
+
+      <label>Access Code</label>
+      <input id="accessCode" type="password" placeholder="Enter code" />
+      <div class="btn-row" style="justify-content:center; margin-top:10px;">
+        <button class="btn primary" id="btnUnlock" type="button">Unlock</button>
+      </div>
+      <div id="lockErr" class="lock-err">Incorrect code. Please try again.</div>
+
+      <div class="hint" style="text-align:center; margin-top:10px;">
+        Tip: You can bookmark this page for quick monthly use.
+      </div>
+    </div>
+  </div>
+
+  <!-- APP -->
+  <div id="app" style="display:none;">
+    <div class="wrap">
+      <div class="card">
+        <h1>Teacher Fee Statement Generator</h1>
+
+        <div class="grid">
+          <div class="col-4">
+            <label>Teacher Name</label>
+            <input id="teacherName" placeholder="e.g., Ms. Neha" />
+          </div>
+          <div class="col-4">
+            <label>Student Name</label>
+            <input id="studentName" placeholder="e.g., Ishana / Aditri" />
+          </div>
+          <div class="col-4">
+            <label>Month</label>
+            <input id="monthPick" type="month" />
+            <div class="hint">Pick month → select any dates classes happened (any day).</div>
+          </div>
+
+          <div class="col-3">
+            <label>Full Class Rate (₹)</label>
+            <input id="rateFull" type="number" value="350" />
+          </div>
+          <div class="col-3">
+            <label>Partial Pay Rate (₹)</label>
+            <input id="ratePartial" type="number" value="100" />
+          </div>
+          <div class="col-3">
+            <label>Mode of Payment</label>
+            <select id="payMode">
+              <option>Bank Transfer / UPI</option>
+              <option>UPI</option>
+              <option>Bank Transfer</option>
+              <option>Cash</option>
+            </select>
+          </div>
+          <div class="col-3">
+            <label>Date of Issue</label>
+            <input id="issueDate" type="date" />
+          </div>
+
+          <div class="col-6">
+            <label>Logo (auto-loaded from ./JSlogo.png)</label>
+            <input id="logoFile" type="file" accept="image/*" />
+            <div class="hint">Auto-load is enabled. Upload only if you want a different logo temporarily.</div>
+          </div>
+
+          <div class="col-6">
+            <label>Authorized By Text</label>
+            <input id="authorizedBy" value="J+S+™ (Jai Jinendra Skill N Service – In collaboration with PulseThought)" />
+          </div>
+
+          <div class="col-12">
+            <div class="btn-row">
+              <span class="pill">Quick actions</span>
+              <button class="btn ghost" id="btnAutoWedFri" type="button">Auto-select Wed & Fri</button>
+              <button class="btn ghost" id="btnAutoAllDays" type="button">Auto-select all days</button>
+              <button class="btn ghost" id="btnSaveDraft" type="button">Save draft</button>
+              <button class="btn ghost" id="btnLoadDraft" type="button">Load last saved</button>
+              <button class="btn danger" id="btnClear" type="button">Clear</button>
+              <button class="btn primary" id="btnPDF" type="button">Generate PDF</button>
+            </div>
+            <div class="hint">Save/Load uses your browser storage only (local).</div>
+          </div>
+        </div>
+
+        <h2>1) Select dates</h2>
+        <div id="calendarHeader" class="footer"></div>
+        <div class="calendar" id="calendar"></div>
+
+        <h2>2) Session details (one-click presets)</h2>
+        <div class="table-wrap" style="margin-top:10px;">
+          <table>
+            <thead>
+              <tr>
+                <th style="width:110px;">Date</th>
+                <th style="width:110px;">Day</th>
+                <th style="width:380px;">Quick Presets</th>
+                <th>Status / Notes</th>
+                <th style="width:120px;" class="right">Payout (₹)</th>
+                <th style="width:90px;"></th>
+              </tr>
+            </thead>
+            <tbody id="sessionRows">
+              <tr><td colspan="6" class="footer">Select days above to create session rows.</td></tr>
+            </tbody>
+          </table>
+        </div>
+
+        <div class="grid" style="margin-top:12px;">
+          <div class="col-6">
+            <div class="footer">
+              <b>Notes (for teacher reference)</b><br>
+              1. Full Payment: For sessions of ≥45 minutes with both student & teacher present.<br>
+              2. Partial Payment: For last moment parent cancellations or student absence after 15 mins.<br>
+              3. No Shows: Teachers must avoid no shows; only 3 allowed in emergencies.<br>
+              4. Planned Leave: Inform at least 10 days in advance for long travel.
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="summary-card">
+              <div class="kv"><span>Total Payable</span><b id="totalPay">₹0</b></div>
+              <div class="spacer"></div>
+              <div class="kv"><span>Unpaid</span><b id="unpaidLabel">₹0</b></div>
+              <div style="margin-top:8px;">
+                <label style="margin:0 0 6px;">Unpaid Amount (₹)</label>
+                <input id="unpaidInput" type="number" value="0" />
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <div class="footer" style="margin-top:14px;">
+          <b>Tip:</b> For makeup classes, just select the date (Sat/Sun also) and press <b>Full</b> or <b>Partial</b>, then choose a quick note if needed.
+        </div>
+      </div>
+    </div>
+  </div>
+
+<script>
+  /* ---------------- PASSCODE CONFIG ---------------- */
+  // Change this to your desired passcode:
+  const ACCESS_CODE = "1234";
+
+  // NOTE: This is client-side protection (good for "private-ish" internal use).
+  // Anyone who knows how to view source could find the code, so don't use it for high security.
+
+  /* ---------------- APP STATE ---------------- */
+  const $ = (id) => document.getElementById(id);
+  const DOW = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+
+  let logoDataUrl = null;
+  let selectedDates = new Set(); // ISO "YYYY-MM-DD"
+  let sessionData = new Map();   // ISO -> {presetKey, notes, payout}
+
+  function pad2(n){ return String(n).padStart(2,'0'); }
+  function todayISO(){
+    const d = new Date();
+    return `${d.getFullYear()}-${pad2(d.getMonth()+1)}-${pad2(d.getDate())}`;
+  }
+  function monthLabel(year, monthIndex){
+    return new Date(year, monthIndex, 1).toLocaleString(undefined, { month:"long", year:"numeric" });
+  }
+  function fmtDMY(iso){
+    const [y,m,d] = iso.split("-").map(Number);
+    return `${pad2(d)}/${pad2(m)}/${String(y).slice(-2)}`;
+  }
+  function ensureMonthPicked(){
+    const val = $("monthPick").value;
+    if(!val) return null;
+    const [yy, mm] = val.split("-").map(Number);
+    return { yy, mm, monthIndex: mm-1, val };
+  }
+
+  function presets(){
+    const full = Number($("rateFull").value || 0);
+    const partial = Number($("ratePartial").value || 0);
+    return {
+      FULL:          { label:`Full (₹${full})`,               payout: full,    notes:"Full class" },
+      PARTIAL:       { label:`Partial (₹${partial})`,         payout: partial, notes:"Partially paid" },
+      TEACH_CANCEL:  { label:"Teacher Cancel (₹0)",           payout: 0,       notes:"Teacher cancellation" },
+      PARENT_CANCEL: { label:"Parent Cancel (₹0)",            payout: 0,       notes:"Parent cancellation" },
+      NO_SHOW:       { label:"No Show / Student absent (₹0)", payout: 0,       notes:"Student absent" }
+    };
+  }
+
+  function setRowFromPreset(iso, presetKey){
+    const p = presets()[presetKey];
+    sessionData.set(iso, { presetKey, notes: p.notes, payout: p.payout });
+  }
+
+  function updateTotals(){
+    let total = 0;
+    for(const iso of selectedDates){
+      total += Number(sessionData.get(iso)?.payout || 0);
+    }
+    $("totalPay").textContent = `₹${total}`;
+    const unpaid = Number($("unpaidInput").value || 0);
+    $("unpaidLabel").textContent = `₹${unpaid}`;
+  }
+
+  function buildCalendar(year, monthIndex){
+    const cal = $("calendar");
+    cal.innerHTML = "";
+    $("calendarHeader").textContent = `Month: ${monthLabel(year, monthIndex)} — click to select/unselect days.`;
+
+    for(const dow of ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"]){
+      const el = document.createElement("div");
+      el.className = "dow";
+      el.textContent = dow;
+      cal.appendChild(el);
+    }
+
+    const first = new Date(year, monthIndex, 1);
+    const last  = new Date(year, monthIndex + 1, 0);
+    const startDow = first.getDay();
+    const daysInMonth = last.getDate();
+
+    for(let i=0;i<startDow;i++){
+      const spacer = document.createElement("div");
+      spacer.style.visibility = "hidden";
+      cal.appendChild(spacer);
+    }
+
+    for(let day=1; day<=daysInMonth; day++){
+      const d = new Date(year, monthIndex, day);
+      const iso = d.toISOString().slice(0,10);
+
+      const card = document.createElement("div");
+      card.className = "day";
+      if(d.getDay()===0 || d.getDay()===6) card.classList.add("soft");
+      if(selectedDates.has(iso)) card.classList.add("selected");
+
+      const top = document.createElement("div");
+      top.className = "top";
+      const num = document.createElement("div"); num.className = "num"; num.textContent = day;
+      const meta = document.createElement("div"); meta.className = "meta"; meta.textContent = DOW[d.getDay()];
+      top.appendChild(num); top.appendChild(meta);
+      card.appendChild(top);
+
+      const tag = document.createElement("div");
+      tag.className = "tag";
+      if(selectedDates.has(iso)){
+        const key = sessionData.get(iso)?.presetKey || "FULL";
+        tag.textContent = (presets()[key]?.label || "Selected").replace(/\s*\(₹.*\)$/,"");
+      }
+      card.appendChild(tag);
+
+      card.addEventListener("click", () => {
+        if(selectedDates.has(iso)){
+          selectedDates.delete(iso);
+          sessionData.delete(iso);
+        } else {
+          selectedDates.add(iso);
+          setRowFromPreset(iso, "FULL");
+        }
+        buildCalendar(year, monthIndex);
+        renderSessionRows();
+      });
+
+      cal.appendChild(card);
+    }
+  }
+
+  function renderSessionRows(){
+    const tbody = $("sessionRows");
+    const dates = Array.from(selectedDates).sort();
+    tbody.innerHTML = "";
+
+    if(dates.length === 0){
+      tbody.innerHTML = `<tr><td colspan="6" class="footer">Select days above to create session rows.</td></tr>`;
+      updateTotals();
+      return;
+    }
+
+    const p = presets();
+
+    for(const iso of dates){
+      const d = new Date(iso+"T00:00:00");
+      const row = sessionData.get(iso) || (setRowFromPreset(iso,"FULL"), sessionData.get(iso));
+
+      const tr = document.createElement("tr");
+
+      const tdDate = document.createElement("td"); tdDate.textContent = fmtDMY(iso);
+      const tdDay  = document.createElement("td"); tdDay.textContent = DOW[d.getDay()];
+
+      const tdPresets = document.createElement("td");
+      const tools = document.createElement("div"); tools.className = "row-tools";
+
+      function chip(key, cls){
+        const b = document.createElement("button");
+        b.type="button"; b.className=`chip ${cls}`; b.textContent=p[key].label;
+        b.addEventListener("click", () => { setRowFromPreset(iso, key); renderSessionRows(); });
+        tools.appendChild(b);
+      }
+
+      chip("FULL","good");
+      chip("PARTIAL","warn");
+      chip("TEACH_CANCEL","zero");
+      chip("PARENT_CANCEL","zero");
+      chip("NO_SHOW","bad");
+
+      const quick = document.createElement("select");
+      quick.style.marginTop = "8px";
+      quick.innerHTML = `
+        <option value="">Quick note…</option>
+        <option value="Full class">Full class</option>
+        <option value="Makeup class – student present">Makeup class – student present</option>
+        <option value="Teacher cancellation">Teacher cancellation</option>
+        <option value="Last moment cancellation by teacher">Last moment cancellation by teacher</option>
+        <option value="Parent cancellation">Parent cancellation</option>
+        <option value="Student absent">Student absent</option>
+        <option value="Student absent due to missed WhatsApp reminder (partially paid)">Student absent due to missed WhatsApp reminder (partially paid)</option>
+        <option value="Kid didn’t join (partially paid)">Kid didn’t join (partially paid)</option>
+        <option value="Rescheduled">Rescheduled</option>
+        <option value="Short class">Short class</option>
+      `;
+      quick.addEventListener("change", () => {
+        if(!quick.value) return;
+        const r = sessionData.get(iso) || {};
+        r.notes = quick.value;
+        sessionData.set(iso, r);
+      });
+
+      tdPresets.appendChild(tools);
+      tdPresets.appendChild(quick);
+
+      const tdNotes = document.createElement("td");
+      const ta = document.createElement("textarea");
+      ta.value = row.notes || "";
+      ta.addEventListener("input", () => {
+        const r = sessionData.get(iso) || {};
+        r.notes = ta.value;
+        sessionData.set(iso, r);
+      });
+      tdNotes.appendChild(ta);
+
+      const tdPay = document.createElement("td");
+      tdPay.className = "right";
+      const pay = document.createElement("input");
+      pay.type="number";
+      pay.value = row.payout ?? 0;
+      pay.addEventListener("input", () => {
+        const r = sessionData.get(iso) || {};
+        r.payout = Number(pay.value || 0);
+        sessionData.set(iso, r);
+        updateTotals();
+      });
+      tdPay.appendChild(pay);
+
+      const tdDel = document.createElement("td");
+      const rm = document.createElement("button");
+      rm.type="button"; rm.className="btn"; rm.textContent="Remove";
+      rm.addEventListener("click", () => {
+        selectedDates.delete(iso);
+        sessionData.delete(iso);
+        const m = ensureMonthPicked();
+        if(m) buildCalendar(m.yy, m.monthIndex);
+        renderSessionRows();
+      });
+      tdDel.appendChild(rm);
+
+      tr.appendChild(tdDate); tr.appendChild(tdDay); tr.appendChild(tdPresets);
+      tr.appendChild(tdNotes); tr.appendChild(tdPay); tr.appendChild(tdDel);
+      tbody.appendChild(tr);
+    }
+
+    updateTotals();
+  }
+
+  function autoSelect(predicate){
+    const m = ensureMonthPicked();
+    if(!m){ alert("Pick a month first."); return; }
+    selectedDates = new Set();
+    sessionData = new Map();
+
+    const last = new Date(m.yy, m.monthIndex + 1, 0);
+    for(let day=1; day<=last.getDate(); day++){
+      const d = new Date(m.yy, m.monthIndex, day);
+      if(predicate(d)){
+        const iso = d.toISOString().slice(0,10);
+        selectedDates.add(iso);
+        setRowFromPreset(iso,"FULL");
+      }
+    }
+    buildCalendar(m.yy, m.monthIndex);
+    renderSessionRows();
+  }
+
+  function saveDraft(){
+    const payload = {
+      teacherName: $("teacherName").value,
+      studentName: $("studentName").value,
+      monthPick: $("monthPick").value,
+      rateFull: $("rateFull").value,
+      ratePartial: $("ratePartial").value,
+      payMode: $("payMode").value,
+      issueDate: $("issueDate").value,
+      authorizedBy: $("authorizedBy").value,
+      unpaid: $("unpaidInput").value,
+      selectedDates: Array.from(selectedDates),
+      sessionData: Array.from(sessionData.entries())
+    };
+    localStorage.setItem("teacherFeeStatementDraft", JSON.stringify(payload));
+    alert("Saved draft.");
+  }
+
+  function loadDraft(){
+    const raw = localStorage.getItem("teacherFeeStatementDraft");
+    if(!raw){ alert("No saved draft found."); return; }
+    const p = JSON.parse(raw);
+
+    $("teacherName").value = p.teacherName || "";
+    $("studentName").value = p.studentName || "";
+    $("monthPick").value = p.monthPick || "";
+    $("rateFull").value = p.rateFull ?? 350;
+    $("ratePartial").value = p.ratePartial ?? 100;
+    $("payMode").value = p.payMode || "Bank Transfer / UPI";
+    $("issueDate").value = p.issueDate || todayISO();
+    $("authorizedBy").value = p.authorizedBy || $("authorizedBy").value;
+    $("unpaidInput").value = p.unpaid ?? 0;
+
+    selectedDates = new Set(p.selectedDates || []);
+    sessionData = new Map(p.sessionData || []);
+
+    const m = ensureMonthPicked();
+    if(m) buildCalendar(m.yy, m.monthIndex);
+    renderSessionRows();
+    alert("Loaded last saved draft.");
+  }
+
+  function clearAll(){
+    if(!confirm("Clear everything on screen?")) return;
+    $("teacherName").value = "";
+    $("studentName").value = "";
+    $("monthPick").value = "";
+    $("rateFull").value = 350;
+    $("ratePartial").value = 100;
+    $("payMode").value = "Bank Transfer / UPI";
+    $("issueDate").value = todayISO();
+    $("authorizedBy").value = "J+S+™ (Jai Jinendra Skill N Service – In collaboration with PulseThought)";
+    $("unpaidInput").value = 0;
+
+    selectedDates = new Set();
+    sessionData = new Map();
+    $("calendar").innerHTML = "";
+    $("calendarHeader").textContent = "";
+    renderSessionRows();
+  }
+
+  async function generatePDF(){
+    const teacher = $("teacherName").value.trim();
+    const student = $("studentName").value.trim();
+    const monthVal = $("monthPick").value;
+
+    if(!teacher || !student || !monthVal){
+      alert("Please fill Teacher Name, Student Name, and Month.");
+      return;
+    }
+
+    const dates = Array.from(selectedDates).sort();
+    if(dates.length === 0){
+      alert("Select at least one class date.");
+      return;
+    }
+
+    const [yy, mm] = monthVal.split("-").map(Number);
+    const monthTitle = `${new Date(yy, mm-1, 1).toLocaleString(undefined,{month:"long"})}, ${yy}`;
+    const issue = $("issueDate").value || todayISO();
+    const mode = $("payMode").value;
+    const auth = $("authorizedBy").value;
+    const unpaid = Number($("unpaidInput").value || 0);
+
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({ unit:"pt", format:"a4" });
+    const pageW = doc.internal.pageSize.getWidth();
+    let y = 40;
+    const leftX = 40;
+
+    // Logo (auto-loaded)
+    if(logoDataUrl){
+      try{ doc.addImage(logoDataUrl, "PNG", (pageW/2)-45, y, 90, 90); y += 105; }
+      catch(e){ try{ doc.addImage(logoDataUrl, "JPEG", (pageW/2)-45, y, 90, 90); y += 105; } catch(_){ } }
+    }
+
+    doc.setFont("helvetica","bold");
+    doc.setFontSize(18);
+    doc.text("Teacher Fee Statement", pageW/2, y, { align:"center" });
+    y += 24;
+
+    doc.setFont("helvetica","normal");
+    doc.setFontSize(11);
+    const lineGap = 16;
+    doc.text(`Teacher Name: ${teacher}`, leftX, y); y += lineGap;
+    doc.text(`Student Name: ${student}`, leftX, y); y += lineGap;
+    doc.text(`Month: ${monthTitle}`, leftX, y); y += lineGap;
+    doc.text(`Mode of Payment: ${mode}`, leftX, y); y += lineGap;
+    doc.text(`Date of Issue: ${new Date(issue+"T00:00:00").toLocaleDateString("en-GB")}`, leftX, y); y += 18;
+
+    doc.setFont("helvetica","bold");
+    doc.text("Session-wise Fee Summary", leftX, y);
+    y += 10;
+
+    const body = dates.map(iso => {
+      const d = new Date(iso+"T00:00:00");
+      const row = sessionData.get(iso) || { notes:"", payout:0 };
+      return [fmtDMY(iso), DOW[d.getDay()], (row.notes||"").trim(), String(row.payout ?? 0)];
+    });
+
+    const total = body.reduce((s, r) => s + Number(r[3] || 0), 0);
+    body.push(["", "", "Total", String(total)]);
+
+    doc.autoTable({
+      startY: y,
+      head: [["Date","Day","Session Status / Notes","Payout (₹)"]],
+      body,
+      styles: { font:"helvetica", fontSize:9, cellPadding:6, valign:"middle" },
+      headStyles: { fillColor:[240,240,240], textColor:[17,24,39], fontStyle:"bold" },
+      columnStyles: { 0:{cellWidth:80}, 1:{cellWidth:90}, 2:{cellWidth:290}, 3:{cellWidth:80, halign:"center"} }
+    });
+
+    let afterY = doc.lastAutoTable.finalY + 18;
+
+    doc.setFont("helvetica","bold");
+    doc.setFontSize(11);
+    doc.text(`Total Payable Amount: ₹${total}`, leftX, afterY); afterY += 16;
+
+    doc.setFont("helvetica","normal");
+    doc.text(`Unpaid Amount: ₹${unpaid}`, leftX, afterY); afterY += 20;
+
+    doc.setFont("helvetica","bold");
+    doc.text("Authorized By:", leftX, afterY); afterY += 14;
+    doc.setFont("helvetica","normal");
+    doc.text(auth, leftX, afterY, { maxWidth: pageW - 80 });
+
+    const safeStudent = student.replace(/[^\w]+/g,"_");
+    doc.save(`Teacher_Fee_Statement_${safeStudent}_${monthTitle.replace(/[,\s]+/g,"_")}.pdf`);
+  }
+
+  /* ---------------- LOGO AUTO-LOAD ---------------- */
+  async function tryAutoLoadLogo(){
+    // Auto-load from same folder: ./JSlogo.png
+    // If missing, it quietly fails and user can upload manually.
+    try{
+      const res = await fetch("./JSlogo.png", { cache:"no-store" });
+      if(!res.ok) return;
+      const blob = await res.blob();
+      const reader = new FileReader();
+      reader.onload = () => {
+        logoDataUrl = reader.result;
+        // show on lock screen too
+        const img = $("lockLogo");
+        if(img) img.src = logoDataUrl;
+      };
+      reader.readAsDataURL(blob);
+    } catch (e) {
+      // ignore
+    }
+  }
+
+  /* ---------------- LOCK SCREEN ---------------- */
+  function unlock(){
+    const code = $("accessCode").value.trim();
+    if(code !== ACCESS_CODE){
+      $("lockErr").style.display = "block";
+      return;
+    }
+    $("lockErr").style.display = "none";
+    // Save unlocked marker for this browser
+    sessionStorage.setItem("teacherFeeUnlocked", "1");
+    $("lockScreen").style.display = "none";
+    $("app").style.display = "block";
+  }
+
+  function initLock(){
+    // If already unlocked in this tab session, skip lock
+    if(sessionStorage.getItem("teacherFeeUnlocked") === "1"){
+      $("lockScreen").style.display = "none";
+      $("app").style.display = "block";
+    } else {
+      $("lockScreen").style.display = "flex";
+      $("app").style.display = "none";
+    }
+  }
+
+  /* ---------------- EVENTS ---------------- */
+  function wireEvents(){
+    $("issueDate").value = todayISO();
+    $("unpaidInput").addEventListener("input", updateTotals);
+
+    $("logoFile").addEventListener("change", (e) => {
+      const f = e.target.files?.[0];
+      if(!f) return;
+      const reader = new FileReader();
+      reader.onload = () => { logoDataUrl = reader.result; };
+      reader.readAsDataURL(f);
+    });
+
+    $("monthPick").addEventListener("change", () => {
+      const m = ensureMonthPicked();
+      if(!m) return;
+      selectedDates = new Set();
+      sessionData = new Map();
+      buildCalendar(m.yy, m.monthIndex);
+      renderSessionRows();
+    });
+
+    $("rateFull").addEventListener("input", renderSessionRows);
+    $("ratePartial").addEventListener("input", renderSessionRows);
+
+    $("btnAutoWedFri").addEventListener("click", () => autoSelect(d => (d.getDay()===3 || d.getDay()===5)));
+    $("btnAutoAllDays").addEventListener("click", () => autoSelect(_ => true));
+    $("btnSaveDraft").addEventListener("click", saveDraft);
+    $("btnLoadDraft").addEventListener("click", loadDraft);
+    $("btnClear").addEventListener("click", clearAll);
+    $("btnPDF").addEventListener("click", generatePDF);
+
+    $("btnUnlock").addEventListener("click", unlock);
+    $("accessCode").addEventListener("keydown", (e) => { if(e.key==="Enter") unlock(); });
+
+    updateTotals();
+  }
+
+  /* ---------------- BOOT ---------------- */
+  (async function boot(){
+    await tryAutoLoadLogo();
+    // If logo loaded, show on lock screen
+    if(logoDataUrl && $("lockLogo")) $("lockLogo").src = logoDataUrl;
+    initLock();
+    wireEvents();
+  })();
+</script>
+</body>
+</html>
