@@ -1,262 +1,1114 @@
 <!doctype html>
 <html lang="en">
 <head>
-<meta charset="utf-8">
-<meta name="viewport" content="width=device-width,initial-scale=1">
-<title>Teacher Fee Statement</title>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Teacher Fee Statement Generator</title>
 
-<!-- jsPDF -->
-<script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
-<script src="https://cdn.jsdelivr.net/npm/jspdf-autotable@3.8.2/dist/jspdf.plugin.autotable.min.js"></script>
+  <!-- PDF libraries -->
+  <script src="https://cdn.jsdelivr.net/npm/jspdf@2.5.1/dist/jspdf.umd.min.js"></script>
+  <script src="https://cdn.jsdelivr.net/npm/jspdf-autotable@3.8.2/dist/jspdf.plugin.autotable.min.js"></script>
 
-<style>
-body{font-family:Arial,Helvetica,sans-serif;background:#f9fafb;margin:0}
-.wrap{max-width:1200px;margin:24px auto;padding:0 16px}
-.card{background:#fff;border:1px solid #e5e7eb;border-radius:14px;padding:16px}
-h1,h2{margin:12px 0}
-label{font-size:12px;color:#555}
-input,select,textarea,button{width:100%;padding:8px;border:1px solid #ccc;border-radius:8px}
-button{cursor:pointer;font-weight:600}
-.grid{display:grid;grid-template-columns:repeat(12,1fr);gap:12px}
-.col-4{grid-column:span 4}.col-3{grid-column:span 3}.col-6{grid-column:span 6}.col-12{grid-column:span 12}
-.calendar{display:grid;grid-template-columns:repeat(7,1fr);gap:6px}
-.day{border:1px solid #ddd;border-radius:10px;padding:6px;text-align:center;cursor:pointer}
-.day.selected{outline:2px solid #000}
-.table{width:100%;border-collapse:collapse}
-.table th,.table td{border-bottom:1px solid #ddd;padding:6px;font-size:13px}
-.right{text-align:right}
-.footer{font-size:12px;color:#666;margin-top:10px}
-.lock{display:flex;justify-content:center;align-items:center;height:100vh}
-.lockbox{background:#fff;border:1px solid #ccc;border-radius:14px;padding:20px;width:320px;text-align:center}
-.lockbox img{width:80px;margin-bottom:10px}
-</style>
+  <style>
+    :root{
+      --bd:#e5e7eb; --txt:#111827; --muted:#6b7280; --bg:#f9fafb; --card:#ffffff;
+      --accent:#111827; --soft:#fafafa;
+    }
+    *{ box-sizing:border-box; }
+    body{ font-family: system-ui, -apple-system, Segoe UI, Roboto, Arial, sans-serif; margin:0; color:var(--txt); background:var(--bg); }
+    .wrap{ max-width:1200px; margin:24px auto; padding:0 16px; }
+    .card{ background:var(--card); border:1px solid var(--bd); border-radius:14px; padding:16px; box-shadow:0 1px 2px rgba(0,0,0,.04); }
+    h1{ font-size:20px; margin:0 0 12px; }
+    h2{ font-size:16px; margin:18px 0 10px; }
+    .grid{ display:grid; grid-template-columns: repeat(12, 1fr); gap:12px; }
+    .col-3{ grid-column: span 3; }
+    .col-4{ grid-column: span 4; }
+    .col-6{ grid-column: span 6; }
+    .col-12{ grid-column: span 12; }
+
+    label{ font-size:12px; color:var(--muted); display:block; margin:0 0 6px; }
+    input, select, textarea, button{
+      width:100%; border:1px solid var(--bd); border-radius:10px;
+      padding:10px 10px; font-size:14px; background:#fff;
+    }
+    textarea{ min-height: 40px; resize: vertical; }
+    button{ cursor:pointer; font-weight:600; }
+    .btn-row{ display:flex; gap:10px; flex-wrap:wrap; align-items:center; }
+    .btn{ width:auto; padding:10px 14px; }
+    .btn.primary{ background:var(--accent); color:#fff; border-color:var(--accent); }
+    .btn.ghost{ background:#fff; }
+    .btn.danger{ background:#fff; border-color:#ef4444; color:#b91c1c; }
+
+    .hint{ font-size:12px; color:var(--muted); margin-top:6px; }
+    .pill{
+      display:inline-flex; align-items:center; gap:8px;
+      font-size:12px; color:var(--muted);
+      padding:6px 10px; border:1px solid var(--bd); border-radius:999px; background:#fff;
+    }
+
+    .calendar{ display:grid; grid-template-columns: repeat(7, 1fr); gap:8px; }
+    .dow{ font-size:12px; color:var(--muted); text-align:center; }
+    .day{
+      border:1px solid var(--bd); border-radius:12px; padding:10px; background:#fff;
+      display:flex; flex-direction:column; gap:6px; min-height:76px; user-select:none;
+    }
+    .day .top{ display:flex; justify-content:space-between; align-items:center; }
+    .day .num{ font-weight:800; }
+    .day .meta{ font-size:11px; color:var(--muted); }
+    .day.selected{ outline:2px solid var(--accent); }
+    .day .tag{ font-size:11px; color:var(--muted); min-height:14px; }
+    .day.soft{ background: var(--soft); }
+
+    .table-wrap{ overflow:auto; border:1px solid var(--bd); border-radius:12px; background:#fff; }
+    table{ width:100%; border-collapse:collapse; min-width:1100px; }
+    th, td{ border-bottom:1px solid var(--bd); padding:10px; vertical-align:top; }
+    th{ text-align:left; font-size:12px; color:var(--muted); background:var(--soft); position:sticky; top:0; z-index:1; }
+    td input, td select, td textarea{ width:100%; }
+    .right{ text-align:right; }
+
+    .row-tools{ display:flex; gap:6px; flex-wrap:wrap; }
+    .chip{
+      width:auto; padding:8px 10px; border-radius:999px; border:1px solid var(--bd);
+      background:#fff; font-size:12px; cursor:pointer;
+    }
+    .chip.warn{ border-color:#f59e0b; color:#92400e; }
+    .chip.good{ border-color:#10b981; color:#065f46; }
+    .chip.zero{ border-color:#d1d5db; color:#6b7280; }
+    .chip.bad{ border-color:#ef4444; color:#991b1b; }
+
+    .footer{ font-size:12px; color:var(--muted); margin-top:10px; line-height:1.55; }
+    .summary-card{ padding:12px; border:1px solid var(--bd); border-radius:12px; background:#fff; }
+    .kv{ display:flex; justify-content:space-between; gap:16px; }
+    .kv b{ font-variant-numeric: tabular-nums; }
+    .spacer{ height:6px; }
+
+    /* Lock screen */
+    .lock-wrap{
+      min-height: calc(100vh - 48px);
+      display:flex; align-items:center; justify-content:center;
+    }
+    .lock-card{
+      width: min(520px, 100%);
+      background:#fff; border:1px solid var(--bd); border-radius:16px;
+      padding:18px; box-shadow:0 6px 20px rgba(0,0,0,.06);
+    }
+    .lock-title{ font-size:18px; font-weight:800; margin:0 0 6px; text-align:center; }
+    .lock-sub{ font-size:13px; color:var(--muted); margin:0 0 14px; text-align:center; }
+    .lock-err{ display:none; color:#b91c1c; font-size:12px; margin-top:8px; text-align:center; }
+    .logo-preview{
+      display:flex; justify-content:center; margin:8px 0 10px;
+    }
+    .logo-preview img{
+      width:90px; height:90px; object-fit:contain;
+      border-radius:12px; border:1px solid var(--bd); background:#fff;
+      padding:6px;
+    }
+
+    @media (max-width: 980px){
+      .col-3,.col-4,.col-6{ grid-column: span 12; }
+      table{ min-width: 980px; }
+    }
+  </style>
 </head>
 
 <body>
+  <!-- LOCK SCREEN -->
+  <div id="lockScreen" class="wrap lock-wrap">
+    <div class="lock-card">
+      <div class="logo-preview"><img id="lockLogo" alt="Logo"/></div>
+      <p class="lock-title">Teacher Fee Statement</p>
+      <p class="lock-sub">Enter access code to continue</p>
 
-<!-- 🔒 LOCK SCREEN -->
-<div id="lock" class="lock">
-  <div class="lockbox">
-    <img src="./JSlogo.png">
-    <h2>Teacher Fee Statement</h2>
-    <input id="code" type="password" placeholder="Access Code">
-    <button onclick="unlock()">Unlock</button>
-    <div id="err" style="color:red;display:none">Wrong code</div>
+      <label>Access Code</label>
+      <input id="accessCode" type="password" placeholder="Enter code" />
+      <div class="btn-row" style="justify-content:center; margin-top:10px;">
+        <button class="btn primary" id="btnUnlock" type="button">Unlock</button>
+      </div>
+      <div id="lockErr" class="lock-err">Incorrect code. Please try again.</div>
+
+      <div class="hint" style="text-align:center; margin-top:10px;">
+        Tip: You can bookmark this page for quick monthly use.
+      </div>
+    </div>
   </div>
-</div>
 
-<!-- APP -->
-<div id="app" style="display:none">
-<div class="wrap">
-<div class="card">
+  <!-- APP -->
+  <div id="app" style="display:none;">
+    <div class="wrap">
+      <div class="card">
+        <h1>Teacher Fee Statement Generator</h1>
 
-<h1>Teacher Fee Statement</h1>
+        <div class="grid">
+          <div class="col-4">
+            <label>Teacher Name</label>
+            <select id="teacherName"></select>
+            <div class="hint">Pre-filled list to avoid spelling mistakes.</div>
+          </div>
 
-<div class="grid">
-<div class="col-4">
-<label>Teacher</label>
-<select id="teacher"></select>
-</div>
+          <div class="col-4">
+            <label>Student Name</label>
+            <select id="studentName"></select>
+            <div class="hint">Pre-filled list to avoid spelling mistakes.</div>
+          </div>
 
-<div class="col-4">
-<label>Student</label>
-<input id="student">
-</div>
+          <div class="col-4">
+            <label>Month</label>
+            <input id="monthPick" type="month" />
+            <div class="hint">Pick month → select any dates classes happened (any day).</div>
+          </div>
 
-<div class="col-4">
-<label>Month</label>
-<input id="month" type="month">
-</div>
+          <div class="col-3">
+            <label>Full Class Rate (₹)</label>
+            <input id="rateFull" type="number" value="350" />
+          </div>
+          <div class="col-3">
+            <label>Partial Pay Rate (₹)</label>
+            <input id="ratePartial" type="number" value="100" />
+          </div>
+          <div class="col-3">
+            <label>Mode of Payment</label>
+            <select id="payMode">
+              <option>Bank Transfer / UPI</option>
+              <option>UPI</option>
+              <option>Bank Transfer</option>
+              <option>Cash</option>
+            </select>
+          </div>
+          <div class="col-3">
+            <label>Date of Issue</label>
+            <input id="issueDate" type="date" />
+          </div>
 
-<div class="col-3">
-<label>Full Rate (₹)</label>
-<input id="fullRate">
-</div>
+          <div class="col-6">
+            <label>Logo (auto-loaded from ./JSlogo.png)</label>
+            <input id="logoFile" type="file" accept="image/*" />
+            <div class="hint">Auto-load is enabled. Upload only if you want a different logo temporarily.</div>
+          </div>
 
-<div class="col-3">
-<label>Partial Rate (₹)</label>
-<input id="partialRate">
-</div>
+          <div class="col-6">
+            <label>Authorized By Text</label>
+            <input id="authorizedBy" value="J+S+™ (Jai Jinendra Skill N Service – In collaboration with PulseThought)" />
+          </div>
 
-<div class="col-3">
-<label>Payment Mode</label>
-<select id="mode">
-<option>UPI</option><option>Bank Transfer</option>
-</select>
-</div>
+          <div class="col-12">
+            <div class="btn-row">
+              <span class="pill">Quick actions</span>
+              <button class="btn ghost" id="btnAutoWedFri" type="button">Auto-select Wed & Fri</button>
+              <button class="btn ghost" id="btnAutoAllDays" type="button">Auto-select all days</button>
 
-<div class="col-3">
-<label>Issue Date</label>
-<input id="issue" type="date">
-</div>
-</div>
+              <button class="btn ghost" id="btnSaveDraft" type="button">Save statement</button>
+              <select id="savedStatements" style="max-width:360px;"></select>
+              <button class="btn ghost" id="btnLoadSelected" type="button">Load selected</button>
 
-<h2>Select Class Dates</h2>
-<div id="calendar" class="calendar"></div>
+              <button class="btn danger" id="btnClear" type="button">Clear</button>
+              <button class="btn primary" id="btnPDF" type="button">Generate PDF</button>
+            </div>
+            <div class="hint">
+              Save/Load uses your browser storage only (local). Saved by Teacher + Student + Month.
+            </div>
+          </div>
+        </div>
 
-<h2>Sessions</h2>
-<table class="table">
-<thead>
-<tr><th>Date</th><th>Day</th><th>Status</th><th class="right">₹</th></tr>
-</thead>
-<tbody id="rows"></tbody>
-</table>
+        <h2>1) Select dates</h2>
+        <div id="calendarHeader" class="footer"></div>
+        <div class="calendar" id="calendar"></div>
 
-<h2>Bonuses</h2>
-<table class="table">
-<thead><tr><th>Type</th><th>Note</th><th class="right">₹</th></tr></thead>
-<tbody id="bonus"></tbody>
-</table>
-<button onclick="addBonus()">+ Add Bonus</button>
+        <h2>2) Session details (one-click presets)</h2>
+        <div class="table-wrap" style="margin-top:10px;">
+          <table>
+            <thead>
+              <tr>
+                <th style="width:110px;">Date</th>
+                <th style="width:110px;">Day</th>
+                <th style="width:120px;">Class Type</th>
+                <th style="width:380px;">Quick Presets</th>
+                <th>Status / Notes</th>
+                <th style="width:120px;" class="right">Payout (₹)</th>
+                <th style="width:90px;"></th>
+              </tr>
+            </thead>
+            <tbody id="sessionRows">
+              <tr><td colspan="7" class="footer">Select days above to create session rows.</td></tr>
+            </tbody>
+          </table>
+        </div>
 
-<h2>Total: ₹<span id="total">0</span></h2>
+        <h2>3) Bonuses (manual)</h2>
+        <div class="table-wrap" style="margin-top:10px;">
+          <table>
+            <thead>
+              <tr>
+                <th style="width:260px;">Bonus Type</th>
+                <th>Notes</th>
+                <th style="width:140px;" class="right">Amount (₹)</th>
+                <th style="width:90px;"></th>
+              </tr>
+            </thead>
+            <tbody id="bonusRows">
+              <tr><td colspan="4" class="footer">Click “+ Add bonus” to add manual bonuses (optional).</td></tr>
+            </tbody>
+          </table>
+        </div>
+        <div class="btn-row" style="margin-top:10px;">
+          <button class="btn ghost" id="btnAddBonus" type="button">+ Add bonus</button>
+        </div>
 
-<button onclick="save()">Save Statement</button>
-<button onclick="pdf()">Generate PDF</button>
+        <div class="grid" style="margin-top:12px;">
+          <div class="col-6">
+            <div class="footer">
+              <b>Notes (for teacher reference)</b><br>
+              1. Full Payment: For sessions of ≥45 minutes with both student & teacher present.<br>
+              2. Partial Payment: For last moment parent cancellations or student absence after 15 mins.<br>
+              3. No Shows: Teachers must avoid no shows; only 3 allowed in emergencies.<br>
+              4. Planned Leave: Inform at least 10 days in advance for long travel.
+            </div>
+          </div>
+          <div class="col-6">
+            <div class="summary-card">
+              <div class="kv"><span>Total Payable (Sessions + Bonuses)</span><b id="totalPay">₹0</b></div>
+              <div class="spacer"></div>
+              <div class="kv"><span>Unpaid</span><b id="unpaidLabel">₹0</b></div>
+              <div style="margin-top:8px;">
+                <label style="margin:0 0 6px;">Unpaid Amount (₹)</label>
+                <input id="unpaidInput" type="number" value="0" />
+              </div>
+            </div>
+          </div>
+        </div>
 
-<h2>Teacher Monthly Summary</h2>
-<select id="sumTeacher"></select>
-<input id="sumMonth" type="month">
-<button onclick="summary()">Build Summary</button>
-
-<table class="table">
-<thead><tr><th>Student</th><th class="right">Classes</th><th class="right">₹</th></tr></thead>
-<tbody id="sumRows"></tbody>
-</table>
-
-</div>
-</div>
-</div>
+        <div class="footer" style="margin-top:14px;">
+          <b>Tip:</b> For makeup classes, just select the date (Sat/Sun also) and press <b>Full</b> or <b>Partial</b>, then choose a quick note if needed.
+        </div>
+      </div>
+    </div>
+  </div>
 
 <script>
-/* 🔐 ACCESS */
-const ACCESS_CODE="1234";
+  /* ---------------- PASSCODE CONFIG ---------------- */
+  const ACCESS_CODE = "1234";
 
-/* 👩‍🏫 TEACHERS */
-const TEACHERS=[
-{name:"Ms. Neha",full:350,partial:100},
-{name:"Senior Teacher",full:400,partial:120},
-{name:"Junior Teacher",full:250,partial:80}
-];
+  /* ---------------- FIXED LISTS (YOU PROVIDED) ---------------- */
+  const TEACHERS = [
+    "Ms. Neha Sengar",
+    "Ms. Priyanka",
+    "Ms. shrishthi Jain",
+    "Ms. Kirti",
+    "Ms. Jyotsana Khorwal"
+  ];
 
-/* 🕒 IST SAFE DATE */
-function localDate(iso){
-const [y,m,d]=iso.split("-").map(Number);
-return new Date(y,m-1,d);
-}
-const DOW=["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
+  const STUDENTS = [
+    "Aditri",
+    "Ishana",
+    "Vivan",
+    "Adhirit",
+    "Shahasra"
+  ];
 
-/* 🔓 */
-function unlock(){
-if(code.value!==ACCESS_CODE){err.style.display="block";return;}
-lock.style.display="none";app.style.display="block";
-}
+  /* ---------------- APP STATE ---------------- */
+  const $ = (id) => document.getElementById(id);
+  const DOW = ["Sunday","Monday","Tuesday","Wednesday","Thursday","Friday","Saturday"];
 
-/* INIT */
-TEACHERS.forEach(t=>{
-teacher.innerHTML+=`<option>${t.name}</option>`;
-sumTeacher.innerHTML+=`<option>${t.name}</option>`;
-});
-teacher.onchange=()=>{
-const t=TEACHERS.find(x=>x.name===teacher.value);
-fullRate.value=t.full;partialRate.value=t.partial;
-};
-issue.value=new Date().toISOString().slice(0,10);
+  let logoDataUrl = null;
+  let selectedDates = new Set(); // ISO "YYYY-MM-DD"
+  let sessionData = new Map();   // ISO -> {presetKey, notes, payout, classType}
 
-/* CALENDAR */
-month.onchange=()=>{
-calendar.innerHTML="";
-rows.innerHTML="";
-const [y,m]=month.value.split("-").map(Number);
-for(let d=1;d<=31;d++){
-const dt=new Date(y,m-1,d);
-if(dt.getMonth()!=m-1)break;
-const iso=`${y}-${String(m).padStart(2,0)}-${String(d).padStart(2,0)}`;
-const div=document.createElement("div");
-div.className="day";
-div.textContent=d;
-div.onclick=()=>{
-div.classList.toggle("selected");
-render();
-};
-div.dataset.iso=iso;
-calendar.appendChild(div);
-}
-};
+  // Bonuses: array of { type, notes, amount }
+  function getBonusesPayload(){
+    const rows = Array.from($("bonusRows").querySelectorAll("tr[data-bonus='1']"));
+    return rows.map(tr => {
+      const type = tr.querySelector("select").value;
+      const notes = tr.querySelector("input[data-notes]").value || "";
+      const amount = Number(tr.querySelector("input[data-amount]").value || 0);
+      return { type, notes, amount };
+    }).filter(b => (b.amount !== 0) || (b.notes.trim().length > 0));
+  }
 
-/* RENDER */
-function render(){
-rows.innerHTML="";
-let total=0;
-document.querySelectorAll(".day.selected").forEach(d=>{
-const iso=d.dataset.iso;
-const dt=localDate(iso);
-const tr=document.createElement("tr");
-tr.innerHTML=`<td>${iso}</td><td>${DOW[dt.getDay()]}</td>
-<td>
-<select onchange="render()">
-<option value="${fullRate.value}">Full</option>
-<option value="${partialRate.value}">Partial</option>
-<option value="0">Cancelled</option>
-</select>
-</td>
-<td class="right">${fullRate.value}</td>`;
-rows.appendChild(tr);
-total+=Number(fullRate.value);
-});
-document.querySelectorAll("#bonus input").forEach(b=>total+=Number(b.value||0));
-document.getElementById("total").textContent=total;
-}
+  function setBonusesFromPayload(list){
+    const tbody = $("bonusRows");
+    tbody.innerHTML = "";
+    if(!list || list.length === 0){
+      tbody.innerHTML = `<tr><td colspan="4" class="footer">Click “+ Add bonus” to add manual bonuses (optional).</td></tr>`;
+      return;
+    }
+    for(const b of list) addBonusRow(b);
+  }
 
-/* BONUS */
-function addBonus(){
-const tr=document.createElement("tr");
-tr.innerHTML=`<td>
-<select>
-<option>No cancellation</option>
-<option>No show</option>
-<option>No late joining</option>
-<option>Demo conversion</option>
-<option>Teacher upgradation</option>
-<option>Birthday bonus</option>
-<option>Other</option>
-</select>
-</td><td><input></td><td class="right"><input value="0"></td>`;
-bonus.appendChild(tr);
-}
+  function sumBonuses(){
+    return getBonusesPayload().reduce((s,b)=>s + Number(b.amount||0), 0);
+  }
 
-/* SAVE */
-function save(){
-const key=`TFS|${teacher.value}|${student.value}|${month.value}`;
-localStorage.setItem(key,JSON.stringify({total:total.textContent}));
-alert("Saved");
-}
+  /* ---------------- IST SAFE DATE HELPERS ----------------
+     IMPORTANT: Never use new Date("YYYY-MM-DD") or toISOString().slice(0,10)
+     because that can shift day due to UTC conversion.
+  */
+  function pad2(n){ return String(n).padStart(2,'0'); }
 
-/* SUMMARY */
-function summary(){
-sumRows.innerHTML="";
-let cls=0,amt=0;
-Object.keys(localStorage).forEach(k=>{
-if(k.startsWith(`TFS|${sumTeacher.value}|`)&&k.endsWith(sumMonth.value)){
-const p=JSON.parse(localStorage.getItem(k));
-const s=k.split("|")[2];
-sumRows.innerHTML+=`<tr><td>${s}</td><td class="right">-</td><td class="right">₹${p.total}</td></tr>`;
-amt+=Number(p.total);
-}
-});
-sumRows.innerHTML+=`<tr><td><b>Total</b></td><td></td><td class="right"><b>₹${amt}</b></td></tr>`;
-}
+  function isoFromYMD(y, m1to12, d1to31){
+    return `${y}-${pad2(m1to12)}-${pad2(d1to31)}`;
+  }
 
-/* PDF */
-async function pdf(){
-const {jsPDF}=window.jspdf;
-const doc=new jsPDF();
-doc.text("Teacher Fee Statement",20,20);
-doc.text(`Teacher: ${teacher.value}`,20,30);
-doc.text(`Student: ${student.value}`,20,40);
-doc.text(`Total: ₹${total.textContent}`,20,50);
-doc.save("Teacher_Fee.pdf");
-}
+  function dateFromISO_Local(iso){
+    const [y,m,d] = iso.split("-").map(Number);
+    return new Date(y, m-1, d); // local midnight (IST safe on Indian devices)
+  }
+
+  function todayISO(){
+    const d = new Date();
+    return isoFromYMD(d.getFullYear(), d.getMonth()+1, d.getDate());
+  }
+
+  function monthLabel(year, monthIndex){
+    return new Date(year, monthIndex, 1).toLocaleString(undefined, { month:"long", year:"numeric" });
+  }
+
+  function fmtDMY(iso){
+    const [y,m,d] = iso.split("-").map(Number);
+    return `${pad2(d)}/${pad2(m)}/${String(y).slice(-2)}`;
+  }
+
+  function ensureMonthPicked(){
+    const val = $("monthPick").value;
+    if(!val) return null;
+    const [yy, mm] = val.split("-").map(Number);
+    return { yy, mm, monthIndex: mm-1, val };
+  }
+
+  /* ---------------- PRESETS ---------------- */
+  function presets(){
+    const full = Number($("rateFull").value || 0);
+    const partial = Number($("ratePartial").value || 0);
+    return {
+      FULL:          { label:`Full (₹${full})`,               payout: full,    notes:"Full class" },
+      PARTIAL:       { label:`Partial (₹${partial})`,         payout: partial, notes:"Partially paid" },
+      TEACH_CANCEL:  { label:"Teacher Cancel (₹0)",           payout: 0,       notes:"Teacher cancellation" },
+      PARENT_CANCEL: { label:"Parent Cancel (₹0)",            payout: 0,       notes:"Parent cancellation" },
+      NO_SHOW:       { label:"No Show / Student absent (₹0)", payout: 0,       notes:"Student absent" }
+    };
+  }
+
+  function setRowFromPreset(iso, presetKey){
+    const p = presets()[presetKey];
+    const existing = sessionData.get(iso) || {};
+    sessionData.set(iso, {
+      presetKey,
+      notes: p.notes,
+      payout: p.payout,
+      classType: existing.classType || "Regular"
+    });
+  }
+
+  /* ---------------- TOTALS ---------------- */
+  function updateTotals(){
+    let totalSessions = 0;
+    for(const iso of selectedDates){
+      totalSessions += Number(sessionData.get(iso)?.payout || 0);
+    }
+    const total = totalSessions + sumBonuses();
+
+    $("totalPay").textContent = `₹${total}`;
+    const unpaid = Number($("unpaidInput").value || 0);
+    $("unpaidLabel").textContent = `₹${unpaid}`;
+  }
+
+  /* ---------------- CALENDAR ---------------- */
+  function buildCalendar(year, monthIndex){
+    const cal = $("calendar");
+    cal.innerHTML = "";
+    $("calendarHeader").textContent = `Month: ${monthLabel(year, monthIndex)} — click to select/unselect days. (IST)`;
+
+    for(const dow of ["Sun","Mon","Tue","Wed","Thu","Fri","Sat"]){
+      const el = document.createElement("div");
+      el.className = "dow";
+      el.textContent = dow;
+      cal.appendChild(el);
+    }
+
+    const first = new Date(year, monthIndex, 1);
+    const last  = new Date(year, monthIndex + 1, 0);
+    const startDow = first.getDay();
+    const daysInMonth = last.getDate();
+
+    for(let i=0;i<startDow;i++){
+      const spacer = document.createElement("div");
+      spacer.style.visibility = "hidden";
+      cal.appendChild(spacer);
+    }
+
+    for(let day=1; day<=daysInMonth; day++){
+      const dLocal = new Date(year, monthIndex, day);
+      const iso = isoFromYMD(year, monthIndex+1, day);
+
+      const card = document.createElement("div");
+      card.className = "day";
+      if(dLocal.getDay()===0 || dLocal.getDay()===6) card.classList.add("soft");
+      if(selectedDates.has(iso)) card.classList.add("selected");
+
+      const top = document.createElement("div");
+      top.className = "top";
+      const num = document.createElement("div"); num.className = "num"; num.textContent = day;
+      const meta = document.createElement("div"); meta.className = "meta"; meta.textContent = DOW[dLocal.getDay()];
+      top.appendChild(num); top.appendChild(meta);
+      card.appendChild(top);
+
+      const tag = document.createElement("div");
+      tag.className = "tag";
+      if(selectedDates.has(iso)){
+        const key = sessionData.get(iso)?.presetKey || "FULL";
+        tag.textContent = (presets()[key]?.label || "Selected").replace(/\s*\(₹.*\)$/,"");
+      }
+      card.appendChild(tag);
+
+      card.addEventListener("click", () => {
+        if(selectedDates.has(iso)){
+          selectedDates.delete(iso);
+          sessionData.delete(iso);
+        } else {
+          selectedDates.add(iso);
+          setRowFromPreset(iso, "FULL");
+        }
+        buildCalendar(year, monthIndex);
+        renderSessionRows();
+      });
+
+      cal.appendChild(card);
+    }
+  }
+
+  /* ---------------- SESSION TABLE ---------------- */
+  function renderSessionRows(){
+    const tbody = $("sessionRows");
+    const dates = Array.from(selectedDates).sort();
+    tbody.innerHTML = "";
+
+    if(dates.length === 0){
+      tbody.innerHTML = `<tr><td colspan="7" class="footer">Select days above to create session rows.</td></tr>`;
+      updateTotals();
+      return;
+    }
+
+    const p = presets();
+
+    for(const iso of dates){
+      const d = dateFromISO_Local(iso); // IST-safe
+      const row = sessionData.get(iso) || (setRowFromPreset(iso,"FULL"), sessionData.get(iso));
+
+      const tr = document.createElement("tr");
+
+      const tdDate = document.createElement("td"); tdDate.textContent = fmtDMY(iso);
+      const tdDay  = document.createElement("td"); tdDay.textContent = DOW[d.getDay()];
+
+      // Class type
+      const tdType = document.createElement("td");
+      const typeSel = document.createElement("select");
+      typeSel.innerHTML = `<option value="Regular">Regular</option><option value="Demo">Demo</option>`;
+      typeSel.value = row.classType || "Regular";
+      typeSel.addEventListener("change", () => {
+        const r = sessionData.get(iso) || {};
+        r.classType = typeSel.value;
+        sessionData.set(iso, r);
+      });
+      tdType.appendChild(typeSel);
+
+      // Presets
+      const tdPresets = document.createElement("td");
+      const tools = document.createElement("div"); tools.className = "row-tools";
+
+      function chip(key, cls){
+        const b = document.createElement("button");
+        b.type="button"; b.className=`chip ${cls}`; b.textContent=p[key].label;
+        b.addEventListener("click", () => { setRowFromPreset(iso, key); renderSessionRows(); });
+        tools.appendChild(b);
+      }
+
+      chip("FULL","good");
+      chip("PARTIAL","warn");
+      chip("TEACH_CANCEL","zero");
+      chip("PARENT_CANCEL","zero");
+      chip("NO_SHOW","bad");
+
+      const quick = document.createElement("select");
+      quick.style.marginTop = "8px";
+      quick.innerHTML = `
+        <option value="">Quick note…</option>
+        <option value="Full class">Full class</option>
+        <option value="Demo class – student attended">Demo class – student attended</option>
+        <option value="Makeup class – student present">Makeup class – student present</option>
+        <option value="Teacher cancellation">Teacher cancellation</option>
+        <option value="Last moment cancellation by teacher">Last moment cancellation by teacher</option>
+        <option value="Parent cancellation">Parent cancellation</option>
+        <option value="Student absent">Student absent</option>
+        <option value="Student absent due to missed WhatsApp reminder (partially paid)">Student absent due to missed WhatsApp reminder (partially paid)</option>
+        <option value="Kid didn’t join (partially paid)">Kid didn’t join (partially paid)</option>
+        <option value="Rescheduled">Rescheduled</option>
+        <option value="Short class">Short class</option>
+      `;
+      quick.addEventListener("change", () => {
+        if(!quick.value) return;
+        const r = sessionData.get(iso) || {};
+        r.notes = quick.value;
+        sessionData.set(iso, r);
+      });
+
+      tdPresets.appendChild(tools);
+      tdPresets.appendChild(quick);
+
+      // Notes
+      const tdNotes = document.createElement("td");
+      const ta = document.createElement("textarea");
+      ta.value = row.notes || "";
+      ta.addEventListener("input", () => {
+        const r = sessionData.get(iso) || {};
+        r.notes = ta.value;
+        sessionData.set(iso, r);
+      });
+      tdNotes.appendChild(ta);
+
+      // Payout
+      const tdPay = document.createElement("td");
+      tdPay.className = "right";
+      const pay = document.createElement("input");
+      pay.type="number";
+      pay.value = row.payout ?? 0;
+      pay.addEventListener("input", () => {
+        const r = sessionData.get(iso) || {};
+        r.payout = Number(pay.value || 0);
+        sessionData.set(iso, r);
+        updateTotals();
+      });
+      tdPay.appendChild(pay);
+
+      // Remove
+      const tdDel = document.createElement("td");
+      const rm = document.createElement("button");
+      rm.type="button"; rm.className="btn"; rm.textContent="Remove";
+      rm.addEventListener("click", () => {
+        selectedDates.delete(iso);
+        sessionData.delete(iso);
+        const m = ensureMonthPicked();
+        if(m) buildCalendar(m.yy, m.monthIndex);
+        renderSessionRows();
+      });
+      tdDel.appendChild(rm);
+
+      tr.appendChild(tdDate);
+      tr.appendChild(tdDay);
+      tr.appendChild(tdType);
+      tr.appendChild(tdPresets);
+      tr.appendChild(tdNotes);
+      tr.appendChild(tdPay);
+      tr.appendChild(tdDel);
+      tbody.appendChild(tr);
+    }
+
+    updateTotals();
+  }
+
+  /* ---------------- AUTO SELECT ---------------- */
+  function autoSelect(predicate){
+    const m = ensureMonthPicked();
+    if(!m){ alert("Pick a month first."); return; }
+    selectedDates = new Set();
+    sessionData = new Map();
+
+    const last = new Date(m.yy, m.monthIndex + 1, 0);
+    for(let day=1; day<=last.getDate(); day++){
+      const dLocal = new Date(m.yy, m.monthIndex, day);
+      if(predicate(dLocal)){
+        const iso = isoFromYMD(m.yy, m.monthIndex+1, day); // IST-safe
+        selectedDates.add(iso);
+        setRowFromPreset(iso,"FULL");
+      }
+    }
+    buildCalendar(m.yy, m.monthIndex);
+    renderSessionRows();
+  }
+
+  /* ---------------- SAVING (Teacher + Student + Month) ---------------- */
+  function statementKey(teacher, student, monthVal){
+    return `TFS|${teacher}|${student}|${monthVal}`;
+  }
+
+  function refreshSavedList(){
+    const sel = $("savedStatements");
+    const keys = Object.keys(localStorage).filter(k => k.startsWith("TFS|")).sort();
+    sel.innerHTML = `<option value="">Load saved statement…</option>` + keys.map(k => {
+      const parts = k.split("|");
+      const teacher = parts[1], student = parts[2], month = parts[3];
+      return `<option value="${k}">${month} — ${teacher} — ${student}</option>`;
+    }).join("");
+  }
+
+  function saveStatement(){
+    const teacher = $("teacherName").value;
+    const student = $("studentName").value;
+    const monthVal = $("monthPick").value;
+
+    if(!teacher || !student || !monthVal){
+      alert("Please select Teacher, Student, and Month.");
+      return;
+    }
+
+    const payload = {
+      teacherName: teacher,
+      studentName: student,
+      monthPick: monthVal,
+      rateFull: $("rateFull").value,
+      ratePartial: $("ratePartial").value,
+      payMode: $("payMode").value,
+      issueDate: $("issueDate").value,
+      authorizedBy: $("authorizedBy").value,
+      unpaid: $("unpaidInput").value,
+      selectedDates: Array.from(selectedDates),
+      sessionData: Array.from(sessionData.entries()),
+      bonuses: getBonusesPayload()
+    };
+
+    localStorage.setItem(statementKey(teacher, student, monthVal), JSON.stringify(payload));
+    refreshSavedList();
+    alert("Saved statement.");
+  }
+
+  function loadSelectedStatement(){
+    const key = $("savedStatements").value;
+    if(!key){ alert("Select a saved statement from the dropdown."); return; }
+
+    const raw = localStorage.getItem(key);
+    if(!raw){ alert("Saved statement not found."); return; }
+
+    const p = JSON.parse(raw);
+
+    $("teacherName").value = p.teacherName || "";
+    $("studentName").value = p.studentName || "";
+    $("monthPick").value = p.monthPick || "";
+    $("rateFull").value = p.rateFull ?? 350;
+    $("ratePartial").value = p.ratePartial ?? 100;
+    $("payMode").value = p.payMode || "Bank Transfer / UPI";
+    $("issueDate").value = p.issueDate || todayISO();
+    $("authorizedBy").value = p.authorizedBy || $("authorizedBy").value;
+    $("unpaidInput").value = p.unpaid ?? 0;
+
+    selectedDates = new Set(p.selectedDates || []);
+    sessionData = new Map(p.sessionData || []);
+
+    setBonusesFromPayload(p.bonuses || []);
+
+    const m = ensureMonthPicked();
+    if(m) buildCalendar(m.yy, m.monthIndex);
+    renderSessionRows();
+    alert("Loaded statement.");
+  }
+
+  /* ---------------- CLEAR ---------------- */
+  function clearAll(){
+    if(!confirm("Clear everything on screen?")) return;
+
+    $("teacherName").value = TEACHERS[0] || "";
+    $("studentName").value = STUDENTS[0] || "";
+    $("monthPick").value = "";
+    $("rateFull").value = 350;
+    $("ratePartial").value = 100;
+    $("payMode").value = "Bank Transfer / UPI";
+    $("issueDate").value = todayISO();
+    $("authorizedBy").value = "J+S+™ (Jai Jinendra Skill N Service – In collaboration with PulseThought)";
+    $("unpaidInput").value = 0;
+
+    selectedDates = new Set();
+    sessionData = new Map();
+
+    $("calendar").innerHTML = "";
+    $("calendarHeader").textContent = "";
+    $("sessionRows").innerHTML = `<tr><td colspan="7" class="footer">Select days above to create session rows.</td></tr>`;
+    setBonusesFromPayload([]);
+    updateTotals();
+  }
+
+  /* ---------------- BONUSES UI ---------------- */
+  const BONUS_TYPES = [
+    "No cancellation",
+    "No show",
+    "No late joining",
+    "Demo conversion",
+    "Teacher upgradation",
+    "Birthday bonus",
+    "Other"
+  ];
+
+  function addBonusRow(b = { type:"Other", notes:"", amount:0 }){
+    const tbody = $("bonusRows");
+
+    // remove placeholder row
+    const placeholder = tbody.querySelector("tr:not([data-bonus='1'])");
+    if(placeholder && placeholder.textContent.includes("Click “+ Add bonus”")) placeholder.remove();
+
+    const tr = document.createElement("tr");
+    tr.setAttribute("data-bonus", "1");
+
+    const tdType = document.createElement("td");
+    const sel = document.createElement("select");
+    sel.innerHTML = BONUS_TYPES.map(x => `<option value="${x}">${x}</option>`).join("");
+    sel.value = b.type || "Other";
+    tdType.appendChild(sel);
+
+    const tdNotes = document.createElement("td");
+    const notes = document.createElement("input");
+    notes.setAttribute("data-notes","1");
+    notes.value = b.notes || "";
+    notes.addEventListener("input", updateTotals);
+    tdNotes.appendChild(notes);
+
+    const tdAmt = document.createElement("td");
+    tdAmt.className = "right";
+    const amt = document.createElement("input");
+    amt.type="number";
+    amt.setAttribute("data-amount","1");
+    amt.value = Number(b.amount || 0);
+    amt.addEventListener("input", updateTotals);
+    tdAmt.appendChild(amt);
+
+    const tdDel = document.createElement("td");
+    const rm = document.createElement("button");
+    rm.type="button";
+    rm.className="btn";
+    rm.textContent="Remove";
+    rm.addEventListener("click", () => {
+      tr.remove();
+      // if no bonus rows remain, add placeholder
+      const any = $("bonusRows").querySelector("tr[data-bonus='1']");
+      if(!any){
+        $("bonusRows").innerHTML = `<tr><td colspan="4" class="footer">Click “+ Add bonus” to add manual bonuses (optional).</td></tr>`;
+      }
+      updateTotals();
+    });
+    tdDel.appendChild(rm);
+
+    tr.appendChild(tdType);
+    tr.appendChild(tdNotes);
+    tr.appendChild(tdAmt);
+    tr.appendChild(tdDel);
+
+    tbody.appendChild(tr);
+    updateTotals();
+  }
+
+  /* ---------------- PDF: ₹ FONT SUPPORT ----------------
+     Place a Unicode font file next to index.html:
+       ./NotoSans-Regular.ttf
+     This makes ₹ render correctly.
+  */
+  let PDF_FONT_READY = false;
+
+  async function ensurePdfFont(doc){
+    if(PDF_FONT_READY) return;
+
+    try{
+      const res = await fetch("./NotoSans-Regular.ttf", { cache:"no-store" });
+      if(!res.ok) throw new Error("Font missing");
+
+      const buf = await res.arrayBuffer();
+      const bytes = new Uint8Array(buf);
+
+      // bytes -> base64 (safe for typical font sizes)
+      let binary = "";
+      for(let i=0;i<bytes.length;i++) binary += String.fromCharCode(bytes[i]);
+      const base64 = btoa(binary);
+
+      doc.addFileToVFS("NotoSans-Regular.ttf", base64);
+      doc.addFont("NotoSans-Regular.ttf", "NotoSans", "normal");
+      doc.addFont("NotoSans-Regular.ttf", "NotoSans", "bold");
+
+      PDF_FONT_READY = true;
+    } catch(e){
+      // If font missing, fallback (₹ may not render correctly)
+      // We do not block PDF generation, but you should upload the font file.
+      console.warn("PDF font not loaded. Upload ./NotoSans-Regular.ttf for proper ₹ rendering.");
+    }
+  }
+
+  /* ---------------- GENERATE PDF ---------------- */
+  async function generatePDF(){
+    const teacher = $("teacherName").value.trim();
+    const student = $("studentName").value.trim();
+    const monthVal = $("monthPick").value;
+
+    if(!teacher || !student || !monthVal){
+      alert("Please select Teacher, Student, and Month.");
+      return;
+    }
+
+    const dates = Array.from(selectedDates).sort();
+    if(dates.length === 0){
+      alert("Select at least one class date.");
+      return;
+    }
+
+    const [yy, mm] = monthVal.split("-").map(Number);
+    const monthTitle = `${new Date(yy, mm-1, 1).toLocaleString(undefined,{month:"long"})}, ${yy}`;
+    const issue = $("issueDate").value || todayISO();
+    const mode = $("payMode").value;
+    const auth = $("authorizedBy").value;
+    const unpaid = Number($("unpaidInput").value || 0);
+    const bonuses = getBonusesPayload();
+
+    const { jsPDF } = window.jspdf;
+    const doc = new jsPDF({ unit:"pt", format:"a4" });
+
+    await ensurePdfFont(doc);
+
+    // Use Unicode font if loaded
+    if(PDF_FONT_READY){
+      doc.setFont("NotoSans","normal");
+    } else {
+      doc.setFont("helvetica","normal");
+    }
+
+    const pageW = doc.internal.pageSize.getWidth();
+    let y = 40;
+    const leftX = 40;
+
+    // Logo (auto-loaded)
+    if(logoDataUrl){
+      try{ doc.addImage(logoDataUrl, "PNG", (pageW/2)-45, y, 90, 90); y += 105; }
+      catch(e){ try{ doc.addImage(logoDataUrl, "JPEG", (pageW/2)-45, y, 90, 90); y += 105; } catch(_){ } }
+    }
+
+    if(PDF_FONT_READY){
+      doc.setFont("NotoSans","bold");
+    } else {
+      doc.setFont("helvetica","bold");
+    }
+    doc.setFontSize(18);
+    doc.text("Teacher Fee Statement", pageW/2, y, { align:"center" });
+    y += 24;
+
+    if(PDF_FONT_READY){
+      doc.setFont("NotoSans","normal");
+    } else {
+      doc.setFont("helvetica","normal");
+    }
+    doc.setFontSize(11);
+    const lineGap = 16;
+
+    doc.text(`Teacher Name: ${teacher}`, leftX, y); y += lineGap;
+    doc.text(`Student Name: ${student}`, leftX, y); y += lineGap;
+    doc.text(`Month: ${monthTitle}`, leftX, y); y += lineGap;
+    doc.text(`Mode of Payment: ${mode}`, leftX, y); y += lineGap;
+
+    // Issue date safe
+    const issueParts = issue.split("-").map(Number);
+    const issueLocal = new Date(issueParts[0], issueParts[1]-1, issueParts[2]);
+    doc.text(`Date of Issue: ${issueLocal.toLocaleDateString("en-GB")}`, leftX, y); y += 18;
+
+    if(PDF_FONT_READY){
+      doc.setFont("NotoSans","bold");
+    } else {
+      doc.setFont("helvetica","bold");
+    }
+    doc.text("Session-wise Fee Summary (IST)", leftX, y);
+    y += 10;
+
+    const body = dates.map(iso => {
+      const d = dateFromISO_Local(iso); // IST-safe day
+      const row = sessionData.get(iso) || { notes:"", payout:0, classType:"Regular" };
+      return [
+        fmtDMY(iso),
+        DOW[d.getDay()],
+        row.classType || "Regular",
+        (row.notes||"").trim(),
+        String(row.payout ?? 0)
+      ];
+    });
+
+    const totalSessions = body.reduce((s, r) => s + Number(r[4] || 0), 0);
+    const totalBonuses = bonuses.reduce((s,b)=>s + Number(b.amount||0), 0);
+    const grandTotal = totalSessions + totalBonuses;
+
+    body.push(["", "", "", "Total (Sessions)", String(totalSessions)]);
+
+    doc.autoTable({
+      startY: y,
+      head: [["Date","Day","Class Type","Session Status / Notes","Payout (₹)"]],
+      body,
+      styles: {
+        font: PDF_FONT_READY ? "NotoSans" : "helvetica",
+        fontSize:9,
+        cellPadding:6,
+        valign:"middle"
+      },
+      headStyles: { fillColor:[240,240,240], textColor:[17,24,39], fontStyle:"bold" },
+      columnStyles: {
+        0:{cellWidth:70},
+        1:{cellWidth:80},
+        2:{cellWidth:70},
+        3:{cellWidth:250},
+        4:{cellWidth:90, halign:"center"}
+      }
+    });
+
+    let afterY = doc.lastAutoTable.finalY + 16;
+
+    // Bonus table (optional)
+    if(bonuses.length){
+      if(PDF_FONT_READY){
+        doc.setFont("NotoSans","bold");
+      } else {
+        doc.setFont("helvetica","bold");
+      }
+      doc.setFontSize(11);
+      doc.text("Bonuses (Manual)", leftX, afterY);
+      afterY += 8;
+
+      doc.autoTable({
+        startY: afterY,
+        head: [["Bonus Type","Notes","Amount (₹)"]],
+        body: bonuses.map(b => [b.type, b.notes || "", String(b.amount || 0)]),
+        styles: {
+          font: PDF_FONT_READY ? "NotoSans" : "helvetica",
+          fontSize:9,
+          cellPadding:6
+        },
+        headStyles: { fillColor:[240,240,240], textColor:[17,24,39], fontStyle:"bold" },
+        columnStyles: { 0:{cellWidth:140}, 1:{cellWidth:260}, 2:{cellWidth:90, halign:"center"} }
+      });
+
+      afterY = doc.lastAutoTable.finalY + 16;
+    }
+
+    if(PDF_FONT_READY){
+      doc.setFont("NotoSans","bold");
+    } else {
+      doc.setFont("helvetica","bold");
+    }
+    doc.setFontSize(11);
+    doc.text(`Total Payable Amount: ₹${grandTotal}`, leftX, afterY); afterY += 16;
+
+    if(PDF_FONT_READY){
+      doc.setFont("NotoSans","normal");
+    } else {
+      doc.setFont("helvetica","normal");
+    }
+    doc.text(`Unpaid Amount: ₹${unpaid}`, leftX, afterY); afterY += 20;
+
+    if(PDF_FONT_READY){
+      doc.setFont("NotoSans","bold");
+    } else {
+      doc.setFont("helvetica","bold");
+    }
+    doc.text("Authorized By:", leftX, afterY); afterY += 14;
+
+    if(PDF_FONT_READY){
+      doc.setFont("NotoSans","normal");
+    } else {
+      doc.setFont("helvetica","normal");
+    }
+    doc.text(auth, leftX, afterY, { maxWidth: pageW - 80 });
+
+    const safeStudent = student.replace(/[^\w]+/g,"_");
+    doc.save(`Teacher_Fee_Statement_${safeStudent}_${monthTitle.replace(/[,\s]+/g,"_")}.pdf`);
+  }
+
+  /* ---------------- LOGO AUTO-LOAD ---------------- */
+  async function tryAutoLoadLogo(){
+    try{
+      const res = await fetch("./JSlogo.png", { cache:"no-store" });
+      if(!res.ok) return;
+      const blob = await res.blob();
+      const reader = new FileReader();
+      reader.onload = () => {
+        logoDataUrl = reader.result;
+        const img = $("lockLogo");
+        if(img) img.src = logoDataUrl;
+      };
+      reader.readAsDataURL(blob);
+    } catch (e) {}
+  }
+
+  /* ---------------- LOCK SCREEN ---------------- */
+  function unlock(){
+    const code = $("accessCode").value.trim();
+    if(code !== ACCESS_CODE){
+      $("lockErr").style.display = "block";
+      return;
+    }
+    $("lockErr").style.display = "none";
+    sessionStorage.setItem("teacherFeeUnlocked", "1");
+    $("lockScreen").style.display = "none";
+    $("app").style.display = "block";
+  }
+
+  function initLock(){
+    if(sessionStorage.getItem("teacherFeeUnlocked") === "1"){
+      $("lockScreen").style.display = "none";
+      $("app").style.display = "block";
+    } else {
+      $("lockScreen").style.display = "flex";
+      $("app").style.display = "none";
+    }
+  }
+
+  /* ---------------- INIT DROPDOWNS ---------------- */
+  function initDropdowns(){
+    const t = $("teacherName");
+    const s = $("studentName");
+
+    t.innerHTML = TEACHERS.map(x => `<option value="${x}">${x}</option>`).join("");
+    s.innerHTML = STUDENTS.map(x => `<option value="${x}">${x}</option>`).join("");
+
+    // default selection
+    if(TEACHERS.length) t.value = TEACHERS[0];
+    if(STUDENTS.length) s.value = STUDENTS[0];
+  }
+
+  /* ---------------- EVENTS ---------------- */
+  function wireEvents(){
+    $("issueDate").value = todayISO();
+    $("unpaidInput").addEventListener("input", updateTotals);
+
+    $("logoFile").addEventListener("change", (e) => {
+      const f = e.target.files?.[0];
+      if(!f) return;
+      const reader = new FileReader();
+      reader.onload = () => { logoDataUrl = reader.result; };
+      reader.readAsDataURL(f);
+    });
+
+    $("monthPick").addEventListener("change", () => {
+      const m = ensureMonthPicked();
+      if(!m) return;
+      selectedDates = new Set();
+      sessionData = new Map();
+      buildCalendar(m.yy, m.monthIndex);
+      renderSessionRows();
+    });
+
+    $("rateFull").addEventListener("input", renderSessionRows);
+    $("ratePartial").addEventListener("input", renderSessionRows);
+
+    $("btnAutoWedFri").addEventListener("click", () => autoSelect(d => (d.getDay()===3 || d.getDay()===5)));
+    $("btnAutoAllDays").addEventListener("click", () => autoSelect(_ => true));
+
+    $("btnSaveDraft").addEventListener("click", saveStatement);
+    $("btnLoadSelected").addEventListener("click", loadSelectedStatement);
+
+    $("btnAddBonus").addEventListener("click", () => addBonusRow());
+
+    $("btnClear").addEventListener("click", clearAll);
+    $("btnPDF").addEventListener("click", generatePDF);
+
+    $("btnUnlock").addEventListener("click", unlock);
+    $("accessCode").addEventListener("keydown", (e) => { if(e.key==="Enter") unlock(); });
+
+    refreshSavedList();
+    updateTotals();
+  }
+
+  /* ---------------- BOOT ---------------- */
+  (async function boot(){
+    initDropdowns();
+    await tryAutoLoadLogo();
+    if(logoDataUrl && $("lockLogo")) $("lockLogo").src = logoDataUrl;
+    initLock();
+    wireEvents();
+  })();
 </script>
 </body>
 </html>
