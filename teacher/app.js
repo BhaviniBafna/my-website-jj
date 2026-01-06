@@ -17,3 +17,86 @@ const CANCEL_LEAVE_PREFILL_URL = "https://docs.google.com/forms/d/e/1FAIpQLSd8Cf
 let TEACHER_DATA = null;
 let CURRENT_TEACHER = null;
 
+
+
+/* ================================
+   LOGIN LOGIC
+   ================================ */
+
+const $ = (id) => document.getElementById(id);
+
+// Load teachers.json
+async function loadTeachers() {
+  const res = await fetch("./data/teachers.json", { cache: "no-store" });
+  if (!res.ok) {
+    alert("Unable to load teacher data.");
+    return null;
+  }
+  return await res.json();
+}
+
+// Handle login
+async function handleLogin() {
+  const code = $("codeInput").value.trim();
+  if (!code) return;
+
+  TEACHER_DATA = await loadTeachers();
+  if (!TEACHER_DATA) return;
+
+  const teacher = TEACHER_DATA.teachers.find(t => t.code === code);
+
+  if (!teacher) {
+    $("loginErr").style.display = "block";
+    return;
+  }
+
+  // Success
+  CURRENT_TEACHER = teacher;
+
+  $("loginErr").style.display = "none";
+  $("loginScreen").style.display = "none";
+  $("app").style.display = "block";
+
+  // Show teacher info
+  $("teacherTitle").textContent = `Welcome, ${teacher.name}`;
+  $("teacherMeta").textContent = `Students: ${teacher.students.join(", ") || "None assigned"}`;
+
+  // Save session (so refresh doesn’t log out)
+  sessionStorage.setItem("teacherLoggedIn", teacher.id);
+}
+
+// Restore session if already logged in
+async function restoreSession() {
+  const savedId = sessionStorage.getItem("teacherLoggedIn");
+  if (!savedId) return;
+
+  TEACHER_DATA = await loadTeachers();
+  if (!TEACHER_DATA) return;
+
+  const teacher = TEACHER_DATA.teachers.find(t => t.id === savedId);
+  if (!teacher) return;
+
+  CURRENT_TEACHER = teacher;
+
+  $("loginScreen").style.display = "none";
+  $("app").style.display = "block";
+  $("teacherTitle").textContent = `Welcome, ${teacher.name}`;
+  $("teacherMeta").textContent = `Students: ${teacher.students.join(", ") || "None assigned"}`;
+}
+
+// Logout
+function handleLogout() {
+  sessionStorage.removeItem("teacherLoggedIn");
+  location.reload();
+}
+
+// Wire events
+document.addEventListener("DOMContentLoaded", () => {
+  $("btnLogin").addEventListener("click", handleLogin);
+  $("codeInput").addEventListener("keydown", (e) => {
+    if (e.key === "Enter") handleLogin();
+  });
+  $("btnLogout").addEventListener("click", handleLogout);
+  restoreSession();
+});
+
