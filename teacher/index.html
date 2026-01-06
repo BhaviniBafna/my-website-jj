@@ -1,9 +1,56 @@
 <!doctype html>
-<html>
-  <head><meta charset="utf-8"><title>Teacher Dashboard</title></head>
-  <body style="font-family:Arial;padding:20px;">
-    <h1>Teacher Dashboard is LIVE ✅</h1>
-    <p>If you can see this, /teacher/ routing is working.</p>
-  </body>
-</html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width,initial-scale=1" />
+  <title>Teacher Dashboard</title>
+  <link rel="stylesheet" href="./styles.css" />
+</head>
 
+<body>
+  <!-- LOGIN -->
+  <div id="loginScreen" class="wrap center">
+    <div class="card">
+      <div class="logoRow">
+        <img id="logoImg" src="../JSlogo.png" alt="Logo" onerror="this.style.display='none'">
+      </div>
+
+      <h1 class="title">Teacher Dashboard</h1>
+      <p class="sub">Enter your access code</p>
+
+      <label class="lbl">Access Code</label>
+      <input id="codeInput" class="inp" type="password" placeholder="Enter code" />
+
+      <button id="btnLogin" class="btn primary" type="button">Login</button>
+
+      <p id="loginErr" class="err" style="display:none;">
+        Incorrect code. Please try again.
+      </p>
+
+      <p class="hint">
+        Note: This dashboard shows only your assigned classes and students.
+      </p>
+    </div>
+  </div>
+
+  <!-- APP (hidden until login) -->
+  <div id="app" class="wrap" style="display:none;">
+    <div class="topbar">
+      <div>
+        <h2 class="h2" id="teacherTitle">Welcome</h2>
+        <div class="muted" id="teacherMeta"></div>
+      </div>
+      <button id="btnLogout" class="btn" type="button">Logout</button>
+    </div>
+
+    <div class="card">
+      <h3 class="h3">Dashboard coming next step ✅</h3>
+      <p class="muted">
+        Login works first. Then we add schedule calendar, reports, and cancel/leave.
+      </p>
+    </div>
+  </div>
+
+  <script src="./app.js"></script>
+</body>
+</html>
