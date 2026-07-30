@@ -3,6 +3,14 @@
   "adminWhatsApp": "917566553913",
   "teachers": [
     {
+      "id": "amitmaurya",
+      "name": "Mr. Amit kumar Maurya",
+      "code": "AMITMAURYA123",
+      "students": ["Mihika"],
+      "fullRate": 350,
+      "partialRate": 100
+    },
+    {
       "id": "neha",
       "name": "Ms. Neha Sengar",
       "code": "NEHA123",
@@ -38,7 +46,7 @@
       "id": "jyotsana",
       "name": "Ms. Jyotsana",
       "code": "JYOTI123",
-      "students": [],
+      "students": ["Vishnu","Vivaan","Druvin"],
       "fullRate": 350,
       "partialRate": 100
     }
